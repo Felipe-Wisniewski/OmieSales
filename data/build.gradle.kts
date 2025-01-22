@@ -1,21 +1,19 @@
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     id("kotlin-kapt")
+    id("kotlin-parcelize")
 }
 
 android {
-    namespace = "com.wisnitech.omiesales"
+    namespace = "com.wisnitech.omiesales.data"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.wisnitech.omiesales"
         minSdk = 24
-        targetSdk = 35
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -27,30 +25,26 @@ android {
             )
         }
     }
-
-    buildFeatures {
-        dataBinding = true
-    }
-
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-
     kotlinOptions {
         jvmTarget = "11"
     }
-
-    packaging { resources.excludes.add("META-INF/*") }
 }
 
 dependencies {
-    implementation(project(":ui"))
-    implementation(project(":data"))
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.activity)
+    implementation(libs.material)
+
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    annotationProcessor(libs.room.compiler)
+    
+    implementation(libs.gson)
+    api(libs.koin)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
