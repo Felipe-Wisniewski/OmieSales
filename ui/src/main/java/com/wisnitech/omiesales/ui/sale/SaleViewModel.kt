@@ -15,7 +15,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class SaleViewModel(
-    private val productRepository: ProductRepository,
     private val saleRepository: SaleRepository
 ) : ViewModel() {
 

@@ -48,7 +48,7 @@ class SaleFragment : Fragment() {
         }
 
         binding.fabAddProduct.setOnClickListener {
-
+            navigateToProducts()
         }
 
         binding.fabConfirmSale.setOnClickListener {
@@ -68,7 +68,11 @@ class SaleFragment : Fragment() {
     }
 
     private fun navigateToProducts() {
-
+        findNavController().navigate(
+            SaleFragmentDirections.actionSaleFragmentToProductsFragment(
+                viewModel.saleId.value ?: 0
+            )
+        )
     }
 
     override fun onResume() {

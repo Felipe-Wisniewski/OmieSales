@@ -1,6 +1,5 @@
 package com.wisnitech.omiesales.data.repository
 
-import android.util.Log
 import com.wisnitech.omiesales.data.model.Product
 import com.wisnitech.omiesales.data.source.local.source.ProductLocalDataSource
 import com.wisnitech.omiesales.data.source.remote.source.ProductRemoteDataSource
@@ -10,23 +9,20 @@ class ProductRepositoryImpl(
     private val productRemote: ProductRemoteDataSource
 ) : ProductRepository {
 
+    override suspend fun updateProductsFromRemote() {
+        return try {
+            val result = productRemote.loadProducts()
+            addAllProducts(result)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
 //    override suspend fun addProduct(product: Product) {
 //        productLocal.saveProduct(product)
 //    }
 
-    override suspend fun getProducts(): List<Product> {
-        return try {
-            val result = productRemote.loadProducts()
-
-            Log.d("FLMWG","result repo: ${result.size}")
-            addAllProducts(result)
-
-            productLocal.loadProducts()
-        } catch (e: Exception) {
-            e.printStackTrace()
-            productLocal.loadProducts()
-        }
-    }
+    override suspend fun getProducts() = productLocal.loadProducts()
 
 //    override suspend fun getProduct(id: Int): Product {
 //        return productLocal.loadProduct(id)

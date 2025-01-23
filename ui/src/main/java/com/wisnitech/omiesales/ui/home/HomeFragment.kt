@@ -49,7 +49,6 @@ class HomeFragment : Fragment() {
     private fun initObservers() {
         viewModel.sale.observe(viewLifecycleOwner) {
             Log.d("FLMWG","sales: ${it.joinToString()}")
-            Toast.makeText(requireContext(), "SALES: ${it.size}", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -64,7 +63,7 @@ class HomeFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        viewModel.insertSomeProductsInDatabase()
         viewModel.getSales()
+        viewModel.updateProductsFromRemote()
     }
 }

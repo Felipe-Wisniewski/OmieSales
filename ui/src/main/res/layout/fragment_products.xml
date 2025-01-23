@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.wisnitech.omiesales.ui.products.ProductsViewModel" />
 
     </data>
 
@@ -59,7 +62,8 @@
                 android:id="@+id/rv_products_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="24dp" />
+                android:layout_marginTop="24dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
