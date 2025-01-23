@@ -14,7 +14,7 @@ lifecycleViewmodelKtx = "2.8.7"
 fragmentKtx = "1.8.5"
 databind-compiler = "8.8.0"
 navigation = "2.8.5"
-room = "2.6.1"
+room = "2.5.0"
 gson = "2.11.0"
 koin = "4.0.1"
 

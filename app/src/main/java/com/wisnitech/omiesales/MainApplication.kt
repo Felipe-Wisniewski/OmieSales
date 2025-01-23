@@ -14,7 +14,7 @@ class MainApplication : Application() {
         startKoin {
             androidLogger()
             androidContext(this@MainApplication)
-            modules(dataModule)
+            modules(dataModule, com.wisnitech.omiesales.ui.di.modules)
         }
 
     }

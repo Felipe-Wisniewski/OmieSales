@@ -1,24 +1,25 @@
 package com.wisnitech.omiesales.data.model
 
 import android.os.Parcelable
-import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-@Entity
+@Entity(
+    foreignKeys = [
+        ForeignKey(
+            entity = Customer::class,
+            parentColumns = ["id"],
+            childColumns = ["customerId"],
+            onDelete = ForeignKey.CASCADE
+        )
+    ]
+)
 data class Sale(
-    @PrimaryKey
-    val id: Int,
-    @ColumnInfo(name = "sale_customer_id")
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
     val customerId: Int,
-    @ColumnInfo(name = "sale_total_items")
-    val totalItems: Int,
-    @ColumnInfo(name = "sale_total")
-    val totalSale: Double,
-    @ColumnInfo(name = "sale_date")
-    val saleDate:String,
-    @ColumnInfo(name = "sale_products")
-    val products: List<Product>
+    val saleDate: String
 ) : Parcelable

@@ -1,7 +1,6 @@
 package com.wisnitech.omiesales.data.model
 
 import android.os.Parcelable
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
@@ -9,10 +8,9 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 @Entity
 data class Customer(
-    @PrimaryKey
-    val id: Int,
-    @ColumnInfo(name = "customer_name")
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
     val name: String,
-    @ColumnInfo(name = "register_date")
+    val phone: String,
     val registerDate: String
 ) : Parcelable
