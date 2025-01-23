@@ -43,7 +43,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun initListeners() {
-        binding.fabAddSale.setOnClickListener { navigateToSales() }
+        binding.fabAddSale.setOnClickListener { navigateToRegisterCustomer() }
     }
 
     private fun initObservers() {
@@ -53,13 +53,18 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun navigateToSales() {
-        findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSaleFragment())
+    private fun navigateToSaleDetails() {
+
+    }
+
+    private fun navigateToRegisterCustomer() {
+        findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToRegisterCustomerFragment())
     }
 
     override fun onResume() {
         super.onResume()
 
+        viewModel.insertSomeProductsInDatabase()
         viewModel.getSales()
     }
 }

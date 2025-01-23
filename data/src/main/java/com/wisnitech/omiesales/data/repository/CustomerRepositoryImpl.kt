@@ -9,28 +9,30 @@ class CustomerRepositoryImpl(
     private val customerRemote: CustomerRemoteDataSource
 ) : CustomerRepository {
 
-    override suspend fun addCustomer(customer: Customer) {
-        customerLocal.saveCustomer(customer)
-    }
+    override suspend fun addCustomer(customer: Customer) = customerLocal.saveCustomer(customer)
 
-    override suspend fun getCustomers(): List<Customer> {
-        return try {
-            val result = customerRemote.loadCustomers()
-            addAllCustomers(result)
+    override suspend fun getCustomerByPhoneNumber(phoneNumber: String) =
+        customerLocal.loadCustomerByPhoneNumber(phoneNumber)
 
-            customerLocal.loadCustomers()
 
-        } catch (e: Exception) {
-            e.printStackTrace()
-            customerLocal.loadCustomers()
-        }
-    }
+//    override suspend fun getCustomers(): List<Customer> {
+//        return try {
+//            val result = customerRemote.loadCustomers()
+//            addAllCustomers(result)
+//
+//            customerLocal.loadCustomers()
+//
+//        } catch (e: Exception) {
+//            e.printStackTrace()
+//            customerLocal.loadCustomers()
+//        }
+//    }
 
-    override suspend fun removeCustomer(customer: Customer) {
-        customerLocal.deleteCustomer(customer)
-    }
+//    override suspend fun removeCustomer(customer: Customer) {
+//        customerLocal.deleteCustomer(customer)
+//    }
 
-    private suspend fun addAllCustomers(customers: List<Customer>) {
-        customerLocal.saveCustomers(customers)
-    }
+//    private suspend fun addAllCustomers(customers: List<Customer>) {
+//        customerLocal.saveCustomers(customers)
+//    }
 }

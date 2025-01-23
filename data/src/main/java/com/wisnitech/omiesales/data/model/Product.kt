@@ -10,8 +10,8 @@ import kotlinx.parcelize.Parcelize
 @Entity
 data class Product(
     @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
-    val code: Int,
+    val id: Long = 0,
+    val code: String,
     val name: String,
     val price: Double,
     val priceUnit: PriceUnit,

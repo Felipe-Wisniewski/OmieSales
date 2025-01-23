@@ -7,9 +7,12 @@ class CustomerLocalDataSourceImpl(private val dao: SaleDao) : CustomerLocalDataS
 
     override suspend fun saveCustomer(customer: Customer) = dao.saveCustomer(customer)
 
-    override suspend fun saveCustomers(customers: List<Customer>) = dao.saveCustomers(customers)
+    override suspend fun loadCustomerByPhoneNumber(phoneNumber: String) =
+        dao.loadCustomerByPhoneNumber(phoneNumber)
 
-    override suspend fun loadCustomers() = dao.loadCustomers()
-
-    override suspend fun deleteCustomer(customer: Customer) = dao.deleteCustomer(customer)
+//    override suspend fun saveCustomers(customers: List<Customer>) = dao.saveCustomers(customers)
+//
+//    override suspend fun loadCustomers() = dao.loadCustomers()
+//
+//    override suspend fun deleteCustomer(customer: Customer) = dao.deleteCustomer(customer)
 }

@@ -9,16 +9,33 @@
         android:id="@+id/homeFragment"
         android:name="com.wisnitech.omiesales.ui.home.HomeFragment"
         android:label="HomeFragment"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
-            android:id="@+id/action_homeFragment_to_saleFragment"
+            android:id="@+id/action_homeFragment_to_registerCustomerFragment"
+            app:destination="@id/registerCustomerFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/registerCustomerFragment"
+        android:name="com.wisnitech.omiesales.ui.customer.RegisterCustomerFragment"
+        android:label="RegisterCustomerFragment"
+        tools:layout="@layout/fragment_register_customer">
+        <action
+            android:id="@+id/action_registerCustomerFragment_to_saleFragment"
             app:destination="@id/saleFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/saleFragment"
         android:name="com.wisnitech.omiesales.ui.sale.SaleFragment"
-        tools:layout="@layout/fragment_sale"
-        android:label="SaleFragment" />
+        android:label="SaleFragment"
+        tools:layout="@layout/fragment_sale">
+        <argument
+            android:name="customerId"
+            app:argType="long" />
+        <argument
+            android:name="customerName"
+            app:argType="string" />
+    </fragment>
 
 </navigation>

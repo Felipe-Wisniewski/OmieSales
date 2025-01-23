@@ -21,7 +21,7 @@ import androidx.room.ForeignKey
     ]
 )
 data class SaleProduct(
-    val saleId: Int,
-    val productId: Int,
+    val saleId: Long,
+    val productId: Long,
     val quantity: Int
 )

@@ -19,7 +19,7 @@ import kotlinx.parcelize.Parcelize
 )
 data class Sale(
     @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
-    val customerId: Int,
+    val id: Long = 0,
+    val customerId: Long,
     val saleDate: String
 ) : Parcelable

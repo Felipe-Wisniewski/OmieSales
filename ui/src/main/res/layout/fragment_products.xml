@@ -5,9 +5,7 @@
 
     <data>
 
-        <variable
-            name="viewModel"
-            type="com.wisnitech.omiesales.ui.sale.SaleViewModel" />
+
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -19,12 +17,12 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/toolbar_sale"
+                android:id="@+id/toolbar_products"
                 style="@style/Widget.MaterialComponents.Toolbar.Primary"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:navigationIcon="@drawable/ic_arrow_back"
-                app:title="Pedido: 1"
+                app:title="Products"
                 app:titleCentered="true" />
 
         </com.google.android.material.appbar.AppBarLayout>
@@ -36,12 +34,6 @@
             android:layout_marginTop="8dp"
             android:orientation="vertical"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@{viewModel.customerName}"
-                tools:text="Felipe Wisniewski" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -64,7 +56,7 @@
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_sale_products_list"
+                android:id="@+id/rv_products_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="24dp" />
@@ -72,19 +64,7 @@
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_add_product"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="88dp"
-            android:contentDescription="TODO"
-            android:enabled="@{viewModel.saleId != null}"
-            android:src="@drawable/ic_add"
-            app:fabSize="normal" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_confirm_sale"
+            android:id="@+id/fab_confirm_products"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"

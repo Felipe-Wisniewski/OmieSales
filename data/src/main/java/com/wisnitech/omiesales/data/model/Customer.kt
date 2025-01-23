@@ -9,7 +9,7 @@ import kotlinx.parcelize.Parcelize
 @Entity
 data class Customer(
     @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    val id: Long = 0,
     val name: String,
     val phone: String,
     val registerDate: String
