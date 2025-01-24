@@ -8,8 +8,24 @@ import com.google.android.material.textfield.TextInputLayout
 import com.wisnitech.omiesales.ui.R
 
 @BindingAdapter("is_visible_view")
-fun View.setVisibility(isVisible:Boolean) {
+fun View.setVisibility(isVisible: Boolean) {
     visibility = if (isVisible) View.VISIBLE else View.GONE
+}
+
+@BindingAdapter("set_order_count")
+fun AppCompatTextView.setOrderCount(count: Int?) {
+    count?.let {
+        val concatenate = "Orders: $it"
+        text = concatenate
+    }
+}
+
+@BindingAdapter("set_order_count_value")
+fun AppCompatTextView.setOrderCountValue(total: Double?) {
+    total?.let {
+        val concatenate = "Total: R$ ${it.toCurrencyNoCoin()}"
+        text = concatenate
+    }
 }
 
 @BindingAdapter("set_search_visibility")
@@ -26,15 +42,33 @@ fun TextInputLayout.setSearchEndIcon(isRegistered: Boolean) {
 
 @BindingAdapter("set_product_code")
 fun AppCompatTextView.setProductCode(code: String?) {
-    code?.let { text = "Cod: $code" }
+    code?.let {
+        val concatenate = "Cod: $code"
+        text = concatenate
+    }
 }
 
 @BindingAdapter(value = ["product_price", "product_unit"], requireAll = true)
 fun AppCompatTextView.setProductPrice(price: Double?, unit: String?) {
     price?.let {
-        val priceFormatted = price.toCurrencyNoCoin()
-        val p = "R$ $priceFormatted"
-        val concat = unit?.let { "$p / $it" }
-        text = concat
+        val priceFormatted = "R$ ${price.toCurrencyNoCoin()}"
+        val concatenate = unit?.let { "$priceFormatted / $it" }
+        text = concatenate
+    }
+}
+
+@BindingAdapter("set_item_quantity")
+fun AppCompatTextView.setTotalItems(items: Int?) {
+    items?.let {
+        val concatenate = "Qtd: $it"
+        text = concatenate
+    }
+}
+
+@BindingAdapter("set_currency_value")
+fun AppCompatTextView.setValueWithCurrencySymbol(total: Double?) {
+    total?.let {
+        val concatenate = "R$ ${it.toCurrencyNoCoin()}"
+        text = concatenate
     }
 }

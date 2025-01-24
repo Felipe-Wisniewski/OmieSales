@@ -19,7 +19,7 @@ val modules = module {
     viewModel { HomeViewModel(get(), get()) }
     viewModel { RegisterCustomerViewModel(get()) }
     viewModel { SaleViewModel(get(), get()) }
-    viewModel { SaleCartViewModel(get()) }
+    viewModel { SaleCartViewModel(get(), get()) }
     viewModel { ProductsViewModel(get()) }
 
     factory<SaleRepository> { SaleRepositoryImpl(get(), get()) }

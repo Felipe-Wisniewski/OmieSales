@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="product"
-            type="com.wisnitech.omiesales.data.model.Product" />
+            name="sale"
+            type="com.wisnitech.omiesales.data.model.SumSales" />
     </data>
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -16,11 +16,6 @@
         android:gravity="center"
         android:orientation="horizontal"
         android:padding="16dp">
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/ic_image_24" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -31,27 +26,26 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="@{product.name}"
-                tools:text="Cheesecake de Frutas Vermelhas e Uva Roxa" />
+                android:text="@{sale.customerName}"
+                tools:text="Felipe Wisniewski" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@{sale.saleDate}"
                 android:textSize="11sp"
-                app:set_product_code="@{product.code}"
-                tools:text="Cod: P0055" />
+                tools:text="24/01/2025" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:product_price="@{product.price}"
-            app:product_unit="@{product.priceUnit.value}"
-            tools:text="R$ 5,00/Un" />
+            app:set_currency_value="@{sale.saleValue}"
+            tools:text="R$ 5,00" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

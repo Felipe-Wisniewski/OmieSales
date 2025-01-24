@@ -1,29 +1,28 @@
 package com.wisnitech.omiesales.ui.home
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import com.wisnitech.omiesales.data.model.SumSales
 import com.wisnitech.omiesales.ui.databinding.FragmentHomeBinding
-import com.wisnitech.omiesales.ui.di.modules
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.context.loadKoinModules
 
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
     private val viewModel by viewModel<HomeViewModel>()
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
+    private val ordersAdapter = HomeOrdersAdapter(::itemOnClick)
 
+//    override fun onAttach(context: Context) {
+//        super.onAttach(context)
+//
 //        loadKoinModules(modules)
-    }
+//    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,6 +30,7 @@ class HomeFragment : Fragment() {
     ): View {
         binding = FragmentHomeBinding.inflate(layoutInflater).apply {
             lifecycleOwner = viewLifecycleOwner
+            viewModel = this@HomeFragment.viewModel
         }
         return binding.root
     }
@@ -38,8 +38,13 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initView()
         initListeners()
         initObservers()
+    }
+
+    private fun initView() {
+        binding.rvSalesHome.adapter = ordersAdapter
     }
 
     private fun initListeners() {
@@ -47,9 +52,14 @@ class HomeFragment : Fragment() {
     }
 
     private fun initObservers() {
-        viewModel.sale.observe(viewLifecycleOwner) {
-            Log.d("FLMWG","sales: ${it.joinToString()}")
+        viewModel.sales.observe(viewLifecycleOwner) {
+            Log.d("FLMWG", "sales: ${it.joinToString()}")
+            ordersAdapter.submitList(it)
         }
+    }
+
+    private fun itemOnClick(sales: SumSales) {
+
     }
 
     private fun navigateToSaleDetails() {
@@ -63,7 +73,6 @@ class HomeFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        viewModel.getSales()
-        viewModel.updateProductsFromRemote()
+        viewModel.getAllOrders()
     }
 }
