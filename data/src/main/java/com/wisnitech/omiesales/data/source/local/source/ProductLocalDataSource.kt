@@ -1,11 +1,15 @@
 package com.wisnitech.omiesales.data.source.local.source
 
+import com.wisnitech.omiesales.data.model.OrderItem
 import com.wisnitech.omiesales.data.model.Product
+import kotlinx.coroutines.flow.Flow
 
 interface ProductLocalDataSource {
-//    suspend fun saveProduct(product: Product)
+    // suspend fun saveProduct(product: Product)
     suspend fun saveAllProducts(products: List<Product>)
     suspend fun loadProducts(): List<Product>
-//    suspend fun loadProduct(id:Int):Product
-//    suspend fun deleteProduct(product: Product)
+    suspend fun saveOrderItem(orderItem: OrderItem)
+    suspend fun loadOrder(): Flow<List<OrderItem>>
+    suspend fun deleteOrderItem(orderItem: OrderItem)
+    // suspend fun deleteProduct(product: Product)
 }

@@ -8,7 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.tabs.TabLayoutMediator
 import com.wisnitech.omiesales.ui.databinding.FragmentSaleBinding
+import com.wisnitech.omiesales.ui.products.ProductsFragment
+import com.wisnitech.omiesales.ui.sale_cart.SaleCartFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SaleFragment : Fragment() {
@@ -16,6 +21,8 @@ class SaleFragment : Fragment() {
     private lateinit var binding: FragmentSaleBinding
     private val args by navArgs<SaleFragmentArgs>()
     private val viewModel by viewModel<SaleViewModel>()
+
+    private lateinit var viewPager: ViewPager2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,46 +45,44 @@ class SaleFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initView()
         initListeners()
         initObservers()
+    }
+
+    private fun initView() {
+        viewPager = binding.viewPagerSale.apply {
+            adapter = SalePagerAdapter(this@SaleFragment)
+        }
+
+        TabLayoutMediator(binding.tabSale, viewPager) { tab, position ->
+            tab.text = if (position == 0) "Order" else "Products"
+        }.attach()
     }
 
     private fun initListeners() {
         binding.toolbarSale.setNavigationOnClickListener {
             findNavController().navigateUp()
         }
-
-        binding.fabAddProduct.setOnClickListener {
-            navigateToProducts()
-        }
-
-        binding.fabConfirmSale.setOnClickListener {
-            viewModel.addProductToSale()
-        }
     }
 
     private fun initObservers() {
-        viewModel.saleId.observe(viewLifecycleOwner) {
-            Log.d("FLMWG", "SALE ID: $it")
-        }
-
         viewModel.saleFinalized.observe(viewLifecycleOwner) {
             Log.d("FLMWG", "SALE FINALIZED")
-            findNavController().navigateUp()
+            setConfirmDialog()
         }
     }
 
-    private fun navigateToProducts() {
-        findNavController().navigate(
-            SaleFragmentDirections.actionSaleFragmentToProductsFragment(
-                viewModel.saleId.value ?: 0
-            )
-        )
+    private fun setConfirmDialog() {
+        findNavController().navigateUp()
     }
 
-    override fun onResume() {
-        super.onResume()
+    private inner class SalePagerAdapter(fa:Fragment):FragmentStateAdapter(fa) {
+        override fun getItemCount(): Int = 2
 
-
+        override fun createFragment(position: Int): Fragment {
+            return if (position == 0) SaleCartFragment()
+            else ProductsFragment()
+        }
     }
 }

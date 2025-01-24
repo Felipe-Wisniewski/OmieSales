@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.wisnitech.omiesales.data.model.Product
 import com.wisnitech.omiesales.ui.databinding.ItemProductViewBinding
 
-class ProductsAdapter : ListAdapter<Product, ProductsAdapter.ProductViewHolder>(PRODUCT_DIFF) {
+class ProductsAdapter(
+    private val itemOnClick: (product: Product) -> Unit
+) : ListAdapter<Product, ProductsAdapter.ProductViewHolder>(PRODUCT_DIFF) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -17,17 +19,18 @@ class ProductsAdapter : ListAdapter<Product, ProductsAdapter.ProductViewHolder>(
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
-        val product = getItem(position)
-        product?.let { holder.bind(it) }
+        val item = getItem(position)
+        item?.let { holder.bind(it) }
     }
 
     inner class ProductViewHolder(
         private val binding: ItemProductViewBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(product: Product) {
+        fun bind(item: Product) {
             binding.apply {
-                this.product = product
+                product = item
+                root.setOnClickListener { itemOnClick(item) }
             }
         }
     }

@@ -5,24 +5,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
+import android.widget.Toast
+import com.wisnitech.omiesales.data.model.Product
 import com.wisnitech.omiesales.ui.databinding.FragmentProductsBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ProductsFragment : Fragment() {
 
     private lateinit var binding: FragmentProductsBinding
-    private val args by navArgs<ProductsFragmentArgs>()
     private val viewModel by viewModel<ProductsViewModel>()
 
-    private val productsAdapter = ProductsAdapter()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        viewModel.setSaleId(args.saleId)
-    }
+    private val productsAdapter = ProductsAdapter(::itemOnClick)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,7 +32,6 @@ class ProductsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initView()
-        initListeners()
         initObservers()
     }
 
@@ -47,16 +39,19 @@ class ProductsFragment : Fragment() {
         binding.rvProductsList.adapter = productsAdapter
     }
 
-    private fun initListeners() {
-        binding.toolbarProducts.setNavigationOnClickListener {
-            findNavController().navigateUp()
-        }
-    }
-
     private fun initObservers() {
         viewModel.products.observe(viewLifecycleOwner) {
             productsAdapter.submitList(it)
         }
+    }
+
+    private fun itemOnClick(product: Product) {
+        setAddProductDialog(product)
+    }
+
+    private fun setAddProductDialog(product: Product) {
+        Toast.makeText(requireContext(), "Product: ${product.name}", Toast.LENGTH_SHORT).show()
+        viewModel.setOrderItem(product, 1)
     }
 
     override fun onResume() {

@@ -5,11 +5,6 @@
 
     <data>
 
-        <import type="com.wisnitech.omiesales.ui.utils.Status" />
-
-        <variable
-            name="viewModel"
-            type="com.wisnitech.omiesales.ui.products.ProductsViewModel" />
 
     </data>
 
@@ -18,34 +13,41 @@
         android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_products_list"
+            android:id="@+id/rv_sale_cart"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone"
-            app:is_visible_view="@{viewModel.status == Status.SUCCESS}"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_product_view"
-            tools:visibility="visible" />
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:orientation="vertical"
-            app:is_visible_view="@{viewModel.status == Status.LOADING}"
-            tools:visibility="gone">
+            android:orientation="vertical">
 
-            <com.google.android.material.progressindicator.CircularProgressIndicator
+            <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                app:tint="#000000"
+                android:src="@drawable/ic_add_shopping_cart" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Loading products.." />
+                android:layout_height="wrap_content"
+                android:text="Empty order!" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_confirm_sale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="16dp"
+            android:contentDescription="TODO"
+            android:src="@drawable/ic_check"
+            app:fabSize="normal" />
 
     </FrameLayout>
 

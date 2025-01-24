@@ -1,26 +1,27 @@
 package com.wisnitech.omiesales.data.source.local.room
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import com.wisnitech.omiesales.data.model.Customer
+import com.wisnitech.omiesales.data.model.OrderItem
 import com.wisnitech.omiesales.data.model.Product
 import com.wisnitech.omiesales.data.model.Sale
 import com.wisnitech.omiesales.data.model.SaleProduct
 import com.wisnitech.omiesales.data.model.SumSales
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface SaleDao {
+
     @Insert(onConflict = OnConflictStrategy.ABORT)
     fun saveCustomer(customer: Customer): Long
 
     @Query("SELECT * FROM customer WHERE phone = :phoneNumber")
     fun loadCustomerByPhoneNumber(phoneNumber: String): Customer
-
-    //    @Insert(onConflict = OnConflictStrategy.REPLACE)
-//    suspend fun saveCustomers(customers:List<Customer>)
 
 //    @Query("SELECT * FROM customer")
 //    suspend fun loadCustomers(): List<Customer>
@@ -28,20 +29,26 @@ interface SaleDao {
 //    @Delete
 //    suspend fun deleteCustomer(customer: Customer)
 
-//    @Insert
-//    suspend fun saveProduct(product: Product)
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveAllProducts(products: List<Product>)
+
+//    @Insert
+//    suspend fun saveProduct(product: Product)
 
     @Query("SELECT * FROM product ORDER BY name ASC")
     fun loadProducts(): List<Product>
 
-//    @Query("SELECT * FROM product WHERE id = :id")
-//    suspend fun loadProduct(id: Int): Product
-
 //    @Delete
 //    suspend fun deleteProduct(product: Product)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun saveOrderItem(orderItem: OrderItem)
+
+    @Query("SELECT * FROM orderitem ORDER BY productName")
+    fun loadOrder(): Flow<List<OrderItem>>
+
+    @Delete
+    fun deleteOrderItem(orderItem: OrderItem)
 
     @Insert
     fun saveSale(sale: Sale): Long

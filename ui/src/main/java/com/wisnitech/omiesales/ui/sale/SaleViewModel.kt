@@ -9,13 +9,15 @@ import com.wisnitech.omiesales.data.model.Sale
 import com.wisnitech.omiesales.data.model.SaleProduct
 import com.wisnitech.omiesales.data.repository.ProductRepository
 import com.wisnitech.omiesales.data.repository.SaleRepository
+import com.wisnitech.omiesales.ui.utils.toCurrencyNoCoin
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class SaleViewModel(
-    private val saleRepository: SaleRepository
+    private val saleRepository: SaleRepository,
+    private val productRepository: ProductRepository
 ) : ViewModel() {
 
     private val _saleId = MutableLiveData<Long>()
@@ -24,8 +26,35 @@ class SaleViewModel(
     private val _customerName = MutableLiveData<String>()
     val customerName: LiveData<String> get() = _customerName
 
+    private val _orderTotalValue = MutableLiveData<String>()
+    val orderTotalValue: LiveData<String> get() = _orderTotalValue
+
+    private val _orderTotalItems = MutableLiveData<String>()
+    val orderTotalItems: LiveData<String> get() = _orderTotalItems
+
     private val _saleFinalized = MutableLiveData<Unit>()
     val saleFinalized: LiveData<Unit> get() = _saleFinalized
+
+    init {
+        getTotalItemsAndValue()
+    }
+
+    private fun getTotalItemsAndValue() = viewModelScope.launch {
+        withContext(Dispatchers.IO) {
+            productRepository.getOrder().collect { orderItems ->
+                var totalItems = 0
+                var totalValue = 0.0
+
+                orderItems.forEach {
+                    totalItems += it.quantity
+                    totalValue += it.total
+                }
+
+                _orderTotalValue.postValue(totalValue.toCurrencyNoCoin())
+                _orderTotalItems.postValue(totalItems.toString())
+            }
+        }
+    }
 
     fun setCustomerName(customerName: String) {
         _customerName.value = customerName
@@ -38,6 +67,7 @@ class SaleViewModel(
             saleRepository.addSale(sale)
         }
     }
+
 
     fun addProductToSale() = viewModelScope.launch {
         saleId.value?.let {
@@ -57,5 +87,13 @@ class SaleViewModel(
             Log.d("FLMWG", "TASK AWAIT : $result")
             _saleFinalized.value = Unit
         }
+    }
+
+    fun deleteOrderItems() {
+
+    }
+
+    fun deleteSale() {
+
     }
 }
