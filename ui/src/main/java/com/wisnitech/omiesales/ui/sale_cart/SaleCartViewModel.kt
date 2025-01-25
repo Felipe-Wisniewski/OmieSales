@@ -1,6 +1,5 @@
 package com.wisnitech.omiesales.ui.sale_cart
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,6 +8,7 @@ import com.wisnitech.omiesales.data.model.OrderItem
 import com.wisnitech.omiesales.data.model.SaleProduct
 import com.wisnitech.omiesales.data.repository.ProductRepository
 import com.wisnitech.omiesales.data.repository.SaleRepository
+import com.wisnitech.omiesales.ui.utils.Event
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -19,13 +19,20 @@ class SaleCartViewModel(
     private val saleRepository: SaleRepository
 ) : ViewModel() {
 
-    private var saleId: Long = 0
+    private var _saleId: Long = 0
 
     private val _orderItems = MutableLiveData<List<OrderItem>>()
     val orderItems: LiveData<List<OrderItem>> get() = _orderItems
 
+    private val _orderPlaced = MutableLiveData<Event<Unit>>()
+    val orderPlaced: LiveData<Event<Unit>> get() = _orderPlaced
+
     init {
         updateCart()
+    }
+
+    fun setSaleId(saleId: Long) {
+        _saleId = saleId
     }
 
     private fun updateCart() = viewModelScope.launch {
@@ -36,28 +43,24 @@ class SaleCartViewModel(
         }
     }
 
-    fun addProductToSale() = viewModelScope.launch {
-        if (saleId != 0L) {
-            val p1 = SaleProduct(1, 1, 2)
-            val p2 = SaleProduct(1, 11, 1)
-            val p3 = SaleProduct(1, 31, 5)
-            val p4 = SaleProduct(1, 12, 2)
+    fun placeOrder() = viewModelScope.launch {
+        if (_saleId != 0L) {
 
-            val task = async(Dispatchers.IO) {
-                saleRepository.addProductOnSale(p1)
-                saleRepository.addProductOnSale(p2)
-                saleRepository.addProductOnSale(p3)
-                saleRepository.addProductOnSale(p4)
+            val orders = orderItems.value
+
+            orders?.forEach { item ->
+                val sale = SaleProduct(_saleId, item.productId, item.quantity)
+
+                val result = async(Dispatchers.IO) { saleRepository.addProductOnSale(sale) }
+
+                // TODO("REMOVE ALL ITEMS")
+                if (result.await() != 0L) {
+                    withContext(Dispatchers.IO) { productRepository.removeOrderItem(item) }
+                }
+            }.apply {
+                _orderPlaced.value = Event(Unit)
             }
-
-            val result = task.await()
-            Log.d("FLMWG", "TASK AWAIT : $result")
-//            _saleFinalized.value = Unit
         }
-    }
-
-    fun deleteOrderItems() {
-
     }
 
     fun deleteSale() {

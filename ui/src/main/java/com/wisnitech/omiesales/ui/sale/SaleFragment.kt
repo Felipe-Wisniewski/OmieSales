@@ -45,19 +45,8 @@ class SaleFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initView()
         initListeners()
         initObservers()
-    }
-
-    private fun initView() {
-        viewPager = binding.viewPagerSale.apply {
-            adapter = SalePagerAdapter(this@SaleFragment)
-        }
-
-        TabLayoutMediator(binding.tabSale, viewPager) { tab, position ->
-            tab.text = if (position == 0) "Order" else "Products"
-        }.attach()
     }
 
     private fun initListeners() {
@@ -67,22 +56,39 @@ class SaleFragment : Fragment() {
     }
 
     private fun initObservers() {
+        viewModel.saleId.observe(viewLifecycleOwner) {
+            setViewPager()
+        }
+
         viewModel.saleFinalized.observe(viewLifecycleOwner) {
             Log.d("FLMWG", "SALE FINALIZED")
             setConfirmDialog()
         }
     }
 
+    private fun setViewPager() {
+        viewPager = binding.viewPagerSale.apply {
+            adapter = SalePagerAdapter(this@SaleFragment)
+        }
+
+        TabLayoutMediator(binding.tabSale, viewPager) { tab, position ->
+            tab.text = if (position == 0) "Order" else "Products"
+        }.attach()
+    }
+
     private fun setConfirmDialog() {
         findNavController().navigateUp()
     }
 
-    private inner class SalePagerAdapter(fa:Fragment):FragmentStateAdapter(fa) {
+    private inner class SalePagerAdapter(fa: Fragment) : FragmentStateAdapter(fa) {
         override fun getItemCount(): Int = 2
 
         override fun createFragment(position: Int): Fragment {
-            return if (position == 0) SaleCartFragment()
-            else ProductsFragment()
+            return if (position == 0) {
+                SaleCartFragment.newInstance(saleId = viewModel.saleId.value ?: 0L)
+            } else {
+                ProductsFragment()
+            }
         }
     }
 }
