@@ -1,16 +1,18 @@
 package com.wisnitech.omiesales.ui.sale
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayoutMediator
+import com.wisnitech.omiesales.ui.R
 import com.wisnitech.omiesales.ui.databinding.FragmentSaleBinding
 import com.wisnitech.omiesales.ui.products.ProductsFragment
 import com.wisnitech.omiesales.ui.sale_cart.SaleCartFragment
@@ -26,6 +28,10 @@ class SaleFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            setConfirmCloseOrder()
+        }
 
         viewModel.setCustomerName(args.customerName)
         viewModel.setNewSale(args.customerId)
@@ -51,7 +57,7 @@ class SaleFragment : Fragment() {
 
     private fun initListeners() {
         binding.toolbarSale.setNavigationOnClickListener {
-            findNavController().navigateUp()
+            setConfirmCloseOrder()
         }
     }
 
@@ -60,10 +66,22 @@ class SaleFragment : Fragment() {
             setViewPager()
         }
 
-        viewModel.saleFinalized.observe(viewLifecycleOwner) {
-            Log.d("FLMWG", "SALE FINALIZED")
-            setConfirmDialog()
+        viewModel.saleDeleted.observe(viewLifecycleOwner) {
+            findNavController().popBackStack(R.id.homeFragment, false)
         }
+    }
+
+    private fun setConfirmCloseOrder() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setMessage("Are you sure you want to cancel the order?")
+            .setNegativeButton("Cancel") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .setPositiveButton("Yes") { dialog, _ ->
+                viewModel.deleteSale()
+                dialog.dismiss()
+            }
+            .show()
     }
 
     private fun setViewPager() {
@@ -74,10 +92,6 @@ class SaleFragment : Fragment() {
         TabLayoutMediator(binding.tabSale, viewPager) { tab, position ->
             tab.text = if (position == 0) "Order" else "Products"
         }.attach()
-    }
-
-    private fun setConfirmDialog() {
-        findNavController().navigateUp()
     }
 
     private inner class SalePagerAdapter(fa: Fragment) : FragmentStateAdapter(fa) {

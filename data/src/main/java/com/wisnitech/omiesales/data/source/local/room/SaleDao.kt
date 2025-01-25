@@ -41,6 +41,9 @@ interface SaleDao {
     @Insert
     fun saveSale(sale: Sale): Long
 
+    @Query("DELETE FROM sale WHERE id = :saleId")
+    fun deleteSale(saleId: Long)
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveProductOnSale(saleProduct: SaleProduct): Long
 

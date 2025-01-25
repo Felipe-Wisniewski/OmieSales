@@ -13,6 +13,8 @@ class SaleRepositoryImpl(
 
     override suspend fun addSale(sale: Sale) = saleLocal.saveSale(sale)
 
+    override suspend fun removeSale(saleId: Long) = saleLocal.deleteSale(saleId)
+
     override suspend fun addProductOnSale(saleProduct: SaleProduct) =
         saleLocal.saveProductOnSale(saleProduct)
 

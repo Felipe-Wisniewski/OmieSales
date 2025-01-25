@@ -6,6 +6,7 @@ import com.wisnitech.omiesales.data.model.SumSales
 
 interface SaleRepository {
     suspend fun addSale(sale: Sale): Long
+    suspend fun removeSale(saleId: Long)
     suspend fun addProductOnSale(saleProduct: SaleProduct): Long
     suspend fun getSales(): List<SumSales>
 }

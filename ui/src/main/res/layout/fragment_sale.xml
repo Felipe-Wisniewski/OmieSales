@@ -23,7 +23,8 @@
                 style="@style/Widget.MaterialComponents.Toolbar.Primary"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:navigationIcon="@drawable/ic_arrow_back"
+                app:navigationIcon="@drawable/ic_close"
+                tools:title="Order: 1"
                 app:set_order_toolbar_title="@{viewModel.saleId.toString()}"
                 app:titleCentered="true" />
 

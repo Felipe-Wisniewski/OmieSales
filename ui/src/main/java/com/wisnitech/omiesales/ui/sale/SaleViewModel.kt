@@ -31,8 +31,8 @@ class SaleViewModel(
     private val _orderTotalItems = MutableLiveData<String>()
     val orderTotalItems: LiveData<String> get() = _orderTotalItems
 
-    private val _saleFinalized = MutableLiveData<Unit>()
-    val saleFinalized: LiveData<Unit> get() = _saleFinalized
+    private val _saleDeleted = MutableLiveData<Unit>()
+    val saleDeleted: LiveData<Unit> get() = _saleDeleted
 
     init {
         getTotalItemsAndValue()
@@ -67,6 +67,14 @@ class SaleViewModel(
 
         _saleId.value = withContext(Dispatchers.IO) {
             saleRepository.addSale(sale)
+        }
+    }
+
+    fun deleteSale() = viewModelScope.launch {
+        saleId.value?.let {
+            _saleDeleted.value = withContext(Dispatchers.IO) {
+                saleRepository.removeSale(it)
+            }
         }
     }
 }

@@ -8,6 +8,8 @@ class SaleLocalDataSourceImpl(private val dao: SaleDao) : SaleLocalDataSource {
 
     override suspend fun saveSale(sale: Sale) = dao.saveSale(sale)
 
+    override suspend fun deleteSale(saleId: Long) = dao.deleteSale(saleId)
+
     override suspend fun saveProductOnSale(saleProduct: SaleProduct) =
         dao.saveProductOnSale(saleProduct)
 

@@ -60,10 +60,10 @@ class ProductsFragment : Fragment() {
         val dialog = MaterialAlertDialogBuilder(requireContext())
             .setTitle(product.name)
             .setView(R.layout.item_quantity_dialog_view)
-            .setNegativeButton("Cancel") { dialog, which ->
+            .setNegativeButton("Cancel") { dialog, _ ->
                 dialog.dismiss()
             }
-            .setPositiveButton("Ok") { dialog, which ->
+            .setPositiveButton("Ok") { dialog, _ ->
                 viewModel.setOrderItem(product, quantity)
                 dialog.dismiss()
             }
