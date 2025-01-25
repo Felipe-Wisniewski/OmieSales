@@ -17,22 +17,6 @@ class SaleRepositoryImpl(
         saleLocal.saveProductOnSale(saleProduct)
 
     override suspend fun getSales(): List<SumSales> {
-        /*return try {
-            val result = saleRemote.loadSales()
-            addAllSales(result)
-
-            saleLocal.loadSumOfSales()
-
-        } catch (e: Exception) {
-            e.printStackTrace()
-            saleLocal.loadSumOfSales()
-        }*/
         return saleLocal.loadSumOfSales()
     }
-
-//    override suspend fun getSale(id: Int): Sale { return saleLocal.loadSale(id) }
-
-//    override suspend fun removeSale(sale: Sale) { saleLocal.deleteSale(sale) }
-
-//    private suspend fun addAllSales(sales: List<Sale>) { saleLocal.saveAllSales(sales) }
 }

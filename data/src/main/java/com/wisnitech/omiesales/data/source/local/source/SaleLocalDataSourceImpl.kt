@@ -12,8 +12,4 @@ class SaleLocalDataSourceImpl(private val dao: SaleDao) : SaleLocalDataSource {
         dao.saveProductOnSale(saleProduct)
 
     override suspend fun loadSumOfSales() = dao.loadSumOfSales()
-
-//    override suspend fun loadSale(id: Int) = dao.loadSale(id)
-
-//    override suspend fun deleteSale(sale: Sale) = dao.deleteSale(sale)
 }

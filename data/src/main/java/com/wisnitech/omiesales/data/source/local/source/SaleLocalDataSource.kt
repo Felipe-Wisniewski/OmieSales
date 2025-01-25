@@ -8,6 +8,4 @@ interface SaleLocalDataSource {
     suspend fun saveSale(sale: Sale): Long
     suspend fun saveProductOnSale(saleProduct: SaleProduct): Long
     suspend fun loadSumOfSales(): List<SumSales>
-//    suspend fun loadSale(id: Int): Sale
-//    suspend fun deleteSale(sale: Sale)
 }

@@ -23,23 +23,11 @@ interface SaleDao {
     @Query("SELECT * FROM customer WHERE phone = :phoneNumber")
     fun loadCustomerByPhoneNumber(phoneNumber: String): Customer
 
-//    @Query("SELECT * FROM customer")
-//    suspend fun loadCustomers(): List<Customer>
-
-//    @Delete
-//    suspend fun deleteCustomer(customer: Customer)
-
     @Insert(onConflict = OnConflictStrategy.ABORT)
     fun saveAllProducts(products: List<Product>)
 
-//    @Insert
-//    suspend fun saveProduct(product: Product)
-
     @Query("SELECT * FROM product ORDER BY name ASC")
     fun loadProducts(): List<Product>
-
-//    @Delete
-//    suspend fun deleteProduct(product: Product)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveOrderItem(orderItem: OrderItem)
@@ -72,10 +60,4 @@ interface SaleDao {
         """
     )
     fun loadSumOfSales(): List<SumSales>
-
-//    @Query("SELECT * FROM sale WHERE id = :id")
-//    suspend fun loadSale(id: Int): Sale
-
-//    @Delete
-//    suspend fun deleteSale(sale: Sale)
 }

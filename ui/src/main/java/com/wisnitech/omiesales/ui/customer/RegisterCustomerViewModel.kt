@@ -7,9 +7,11 @@ import androidx.lifecycle.viewModelScope
 import com.wisnitech.omiesales.data.model.Customer
 import com.wisnitech.omiesales.data.repository.CustomerRepository
 import com.wisnitech.omiesales.ui.utils.Event
+import com.wisnitech.omiesales.ui.utils.getCurrentDate
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.Calendar
 
 class RegisterCustomerViewModel(private val customerRepository: CustomerRepository) : ViewModel() {
 
@@ -53,7 +55,7 @@ class RegisterCustomerViewModel(private val customerRepository: CustomerReposito
             val customer = Customer(
                 name = customerName.value ?: "",
                 phone = customerPhone.value ?: "",
-                registerDate = "23/01/2025"
+                registerDate = Calendar.getInstance().getCurrentDate()
             )
 
             val id = withContext(Dispatchers.IO) {

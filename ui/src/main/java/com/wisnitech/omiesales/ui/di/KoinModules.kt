@@ -14,7 +14,7 @@ import com.wisnitech.omiesales.ui.sale_cart.SaleCartViewModel
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
-val modules = module {
+val uiModules = module {
 
     viewModel { HomeViewModel(get(), get()) }
     viewModel { RegisterCustomerViewModel(get()) }

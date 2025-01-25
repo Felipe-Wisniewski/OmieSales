@@ -1,7 +1,6 @@
 package com.wisnitech.omiesales.data.di
 
 import androidx.room.Room
-import androidx.room.RoomDatabase
 import com.wisnitech.omiesales.data.source.local.room.SaleDao
 import com.wisnitech.omiesales.data.source.local.room.SaleDatabase
 import com.wisnitech.omiesales.data.source.local.source.CustomerLocalDataSource

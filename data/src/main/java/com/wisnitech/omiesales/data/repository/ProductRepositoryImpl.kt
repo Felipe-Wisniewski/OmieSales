@@ -20,27 +20,17 @@ class ProductRepositoryImpl(
         }
     }
 
-//    override suspend fun addProduct(product: Product) {
-//        productLocal.saveProduct(product)
-//    }
-
     override suspend fun getProducts() = productLocal.loadProducts()
 
     override suspend fun addOrderItem(orderItem: OrderItem) = productLocal.saveOrderItem(orderItem)
+
+    override suspend fun updateOrderItem(oldItem: OrderItem, newItem: OrderItem) =
+        productLocal.updateOrderItem(oldItem, newItem)
 
     override suspend fun getOrder(): Flow<List<OrderItem>> = productLocal.loadOrder()
 
     override suspend fun removeOrderItem(orderItem: OrderItem) =
         productLocal.deleteOrderItem(orderItem)
-
-//    override suspend fun getProduct(id: Int): Product {
-//        return productLocal.loadProduct(id)
-//    }
-
-//    override suspend fun removeProduct(product: Product) {
-//        productLocal.deleteProduct(product)
-//    }
-
 
     private suspend fun addAllProducts(products: List<Product>) {
         productLocal.saveAllProducts(products)

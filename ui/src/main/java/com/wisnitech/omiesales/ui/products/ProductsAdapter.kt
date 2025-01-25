@@ -14,7 +14,7 @@ class ProductsAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val binding = ItemProductViewBinding.inflate(layoutInflater)
+        val binding = ItemProductViewBinding.inflate(layoutInflater, parent, false)
         return ProductViewHolder(binding)
     }
 

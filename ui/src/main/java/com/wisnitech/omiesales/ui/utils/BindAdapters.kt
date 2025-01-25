@@ -28,6 +28,11 @@ fun AppCompatTextView.setOrderCountValue(total: Double?) {
     }
 }
 
+@BindingAdapter("set_formatted_date")
+fun AppCompatTextView.setFormattedDate(date: String) {
+    text = date.getFormattedDate()
+}
+
 @BindingAdapter("set_search_visibility")
 fun TextInputLayout.setSearchEndIcon(isRegistered: Boolean) {
     if (isRegistered) {

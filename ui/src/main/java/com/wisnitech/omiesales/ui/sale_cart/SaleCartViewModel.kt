@@ -45,15 +45,30 @@ class SaleCartViewModel(
         }
     }
 
-    fun updateOrderItem(quantity: Int, orderItem: OrderItem) {
+    fun updateOrderItem(orderItem: OrderItem, quantity: Int) = viewModelScope.launch {
         when {
-            quantity == 0 -> {
-                // TODO("remove item")
-            }
+            quantity == 0 -> removeItem(orderItem)
 
-            quantity != orderItem.quantity -> {
-                // TODO("update item")
-            }
+            quantity != orderItem.quantity -> updateItem(orderItem, quantity)
+        }
+    }
+
+    private fun removeItem(orderItem: OrderItem) = viewModelScope.launch {
+        withContext(Dispatchers.IO) {
+            productRepository.removeOrderItem(orderItem)
+        }
+    }
+
+    private fun updateItem(orderItem: OrderItem, quantity: Int) = viewModelScope.launch {
+        withContext(Dispatchers.IO) {
+            val newItem = OrderItem(
+                productId = orderItem.productId,
+                productName = orderItem.productName,
+                productPrice = orderItem.productPrice,
+                quantity = quantity,
+                total = totalValueOfProducts(orderItem.productPrice, quantity)
+            )
+            productRepository.updateOrderItem(orderItem, newItem)
         }
     }
 
@@ -80,4 +95,6 @@ class SaleCartViewModel(
     fun deleteSale() {
 
     }
+
+    private fun totalValueOfProducts(price: Double, quantity: Int) = quantity * price
 }

@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.wisnitech.omiesales.data.model.SumSales
 import com.wisnitech.omiesales.ui.databinding.ItemOrderViewBinding
+import com.wisnitech.omiesales.ui.utils.getFormattedDate
+import com.wisnitech.omiesales.ui.utils.toCurrencyNoCoin
 
 class HomeOrdersAdapter(
     private val itemOnClick: (order: SumSales) -> Unit
@@ -14,7 +16,7 @@ class HomeOrdersAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrdersViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val binding = ItemOrderViewBinding.inflate(layoutInflater)
+        val binding = ItemOrderViewBinding.inflate(layoutInflater, parent, false)
         return OrdersViewHolder(binding)
     }
 
@@ -28,11 +30,16 @@ class HomeOrdersAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: SumSales) {
-            binding.apply {
-                sale = item
-                root.setOnClickListener { itemOnClick(item) }
-            }
+            binding.setData(item)
         }
+    }
+
+    private fun ItemOrderViewBinding.setData(item: SumSales) {
+        itemOrderName.text = item.customerName
+        itemOrderDate.text = item.saleDate.getFormattedDate()
+        itemOrderValue.text = "R$ ${item.saleValue.toCurrencyNoCoin()}"
+        itemOrderNumber.text = "n° ${item.saleId}"
+        containerItemOrderView.setOnClickListener { itemOnClick(item) }
     }
 
     companion object {

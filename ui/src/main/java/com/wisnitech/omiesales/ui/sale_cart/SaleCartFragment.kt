@@ -1,11 +1,12 @@
 package com.wisnitech.omiesales.ui.sale_cart
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.wisnitech.omiesales.data.model.OrderItem
@@ -64,7 +65,7 @@ class SaleCartFragment : Fragment() {
         viewModel.orderItems.observe(viewLifecycleOwner) {
             saleCartAdapter.submitList(it)
         }
-        
+
         viewModel.orderPlaced.observeEvent(viewLifecycleOwner) {
             findNavController().popBackStack(R.id.homeFragment, false)
         }
@@ -85,7 +86,36 @@ class SaleCartFragment : Fragment() {
     }
 
     private fun itemOnClick(orderItem: OrderItem) {
-        Log.d("FLMWG", "item:${orderItem.productName}")
+        setUpdateItemDialog(orderItem)
+    }
+
+    private fun setUpdateItemDialog(item: OrderItem) {
+        var quantity = item.quantity
+
+        val dialog = MaterialAlertDialogBuilder(requireContext())
+            .setTitle(item.productName)
+            .setView(R.layout.item_quantity_dialog_view)
+            .setNegativeButton("Cancel") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .setPositiveButton("Ok") { dialog, _ ->
+                viewModel.updateOrderItem(item, quantity)
+                dialog.dismiss()
+            }
+            .show()
+
+        val textView = dialog.findViewById<AppCompatTextView>(R.id.txt_item_quantity)
+        textView?.text = "$quantity"
+
+        dialog.findViewById<Button>(R.id.btn_remove_item)?.setOnClickListener {
+            quantity--
+            textView?.text = "$quantity"
+        }
+
+        dialog.findViewById<Button>(R.id.btn_add_item)?.setOnClickListener {
+            quantity++
+            textView?.text = "$quantity"
+        }
     }
 
     companion object {

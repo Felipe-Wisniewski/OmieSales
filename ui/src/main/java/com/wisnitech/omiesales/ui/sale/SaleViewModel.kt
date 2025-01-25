@@ -7,10 +7,12 @@ import androidx.lifecycle.viewModelScope
 import com.wisnitech.omiesales.data.model.Sale
 import com.wisnitech.omiesales.data.repository.ProductRepository
 import com.wisnitech.omiesales.data.repository.SaleRepository
+import com.wisnitech.omiesales.ui.utils.getCurrentDate
 import com.wisnitech.omiesales.ui.utils.toCurrencyNoCoin
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.Calendar
 
 class SaleViewModel(
     private val saleRepository: SaleRepository,
@@ -58,7 +60,10 @@ class SaleViewModel(
     }
 
     fun setNewSale(customerId: Long) = viewModelScope.launch {
-        val sale = Sale(customerId = customerId, saleDate = "23/01/2025")
+        val sale = Sale(
+            customerId = customerId,
+            saleDate = Calendar.getInstance().getCurrentDate()
+        )
 
         _saleId.value = withContext(Dispatchers.IO) {
             saleRepository.addSale(sale)

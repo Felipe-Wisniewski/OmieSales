@@ -13,26 +13,4 @@ class CustomerRepositoryImpl(
 
     override suspend fun getCustomerByPhoneNumber(phoneNumber: String) =
         customerLocal.loadCustomerByPhoneNumber(phoneNumber)
-
-
-//    override suspend fun getCustomers(): List<Customer> {
-//        return try {
-//            val result = customerRemote.loadCustomers()
-//            addAllCustomers(result)
-//
-//            customerLocal.loadCustomers()
-//
-//        } catch (e: Exception) {
-//            e.printStackTrace()
-//            customerLocal.loadCustomers()
-//        }
-//    }
-
-//    override suspend fun removeCustomer(customer: Customer) {
-//        customerLocal.deleteCustomer(customer)
-//    }
-
-//    private suspend fun addAllCustomers(customers: List<Customer>) {
-//        customerLocal.saveCustomers(customers)
-//    }
 }
