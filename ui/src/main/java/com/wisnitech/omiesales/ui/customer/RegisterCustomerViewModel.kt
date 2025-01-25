@@ -1,5 +1,6 @@
 package com.wisnitech.omiesales.ui.customer
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -32,6 +33,9 @@ class RegisterCustomerViewModel(private val customerRepository: CustomerReposito
 
     private val _customerId = MutableLiveData<Event<Long>>()
     val customerId: LiveData<Event<Long>> get() = _customerId
+
+    private val _customerNotFound = MutableLiveData<Event<Unit>>()
+    val customerNotFound: LiveData<Event<Unit>> get() = _customerNotFound
 
     fun setCustomerName(name: String) {
         _customerName.value = name
@@ -66,7 +70,7 @@ class RegisterCustomerViewModel(private val customerRepository: CustomerReposito
         }
     }
 
-    fun getCustomerByPhone() = viewModelScope.launch {
+    private fun getCustomerByPhone() = viewModelScope.launch {
         validFields()
 
         invalidPhone.value?.let {
@@ -75,8 +79,13 @@ class RegisterCustomerViewModel(private val customerRepository: CustomerReposito
                     val result = withContext(Dispatchers.IO) {
                         customerRepository.getCustomerByPhoneNumber(phone)
                     }
-                    _customerName.value = result.name
-                    _customerId.value = Event(result.id)
+
+                    if (result != null) {
+                        _customerName.value = result.name
+                        _customerId.value = Event(result.id)
+                    } else {
+                        _customerNotFound.value = Event(Unit)
+                    }
                 }
             }
         }

@@ -49,8 +49,8 @@ class SaleViewModel(
                     totalValue += it.total
                 }
 
-                _orderTotalValue.postValue(totalValue.toCurrencyNoCoin())
-                _orderTotalItems.postValue(totalItems.toString())
+                _orderTotalItems.postValue("Items: $totalItems")
+                _orderTotalValue.postValue("R$ ${totalValue.toCurrencyNoCoin()}")
             }
         }
     }

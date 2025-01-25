@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:navigationIcon="@drawable/ic_arrow_back"
-                app:title="Order: 1"
+                app:set_order_toolbar_title="@{viewModel.saleId.toString()}"
                 app:titleCentered="true" />
 
         </com.google.android.material.appbar.AppBarLayout>
@@ -32,7 +32,6 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="8dp"
             android:orientation="vertical"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -40,13 +39,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
                 android:text="@{viewModel.customerName}"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 tools:text="Felipe Wisniewski" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="4dp"
                 android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -54,6 +57,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:text="@{viewModel.orderTotalItems}"
+                    android:textStyle="bold"
                     tools:text="Items: 4" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -62,6 +66,7 @@
                     android:layout_weight="1"
                     android:gravity="end"
                     android:text="@{viewModel.orderTotalValue}"
+                    android:textStyle="bold"
                     tools:text="Total: R$ 154,58" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -70,6 +75,7 @@
                 android:id="@+id/tab_sale"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 app:tabIndicatorFullWidth="true">
 
                 <com.google.android.material.tabs.TabItem

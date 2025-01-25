@@ -4,5 +4,5 @@ import com.wisnitech.omiesales.data.model.Customer
 
 interface CustomerLocalDataSource {
     suspend fun saveCustomer(customer: Customer): Long
-    suspend fun loadCustomerByPhoneNumber(phoneNumber: String): Customer
+    suspend fun loadCustomerByPhoneNumber(phoneNumber: String): Customer?
 }

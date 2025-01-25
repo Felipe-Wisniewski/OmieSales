@@ -1,13 +1,17 @@
 package com.wisnitech.omiesales.ui.customer
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.FOCUSABLE
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.navigation.fragment.findNavController
 import com.wisnitech.omiesales.ui.databinding.FragmentRegisterCustomerBinding
+import com.wisnitech.omiesales.ui.utils.MaskTextWatcher
 import com.wisnitech.omiesales.ui.utils.observeEvent
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -39,16 +43,23 @@ class RegisterCustomerFragment : Fragment() {
             findNavController().navigateUp()
         }
 
-        binding.edtCustomerName.doAfterTextChanged {
-            viewModel.setCustomerName(it.toString())
+        binding.edtCustomerName.apply {
+            doAfterTextChanged {
+                viewModel.setCustomerName(it.toString())
+            }
         }
 
         binding.tilCustomerPhone.setEndIconOnClickListener {
-            viewModel.getCustomerByPhone()
+            viewModel.setCustomer()
         }
 
-        binding.edtCustomerPhone.doAfterTextChanged {
-            viewModel.setCustomerPhone(it.toString())
+        binding.edtCustomerPhone.apply {
+            addTextChangedListener(MaskTextWatcher.insert("(##) #####-####"))
+
+            doAfterTextChanged {
+                val phoneUnmask = MaskTextWatcher.unmaskOnlySymbol(it.toString())
+                viewModel.setCustomerPhone(phoneUnmask)
+            }
         }
 
         binding.switchRegistered.setOnCheckedChangeListener { _, isChecked ->
@@ -63,6 +74,10 @@ class RegisterCustomerFragment : Fragment() {
     private fun initObservers() {
         viewModel.customerId.observeEvent(viewLifecycleOwner) {
             navigateToSale(it)
+        }
+
+        viewModel.customerNotFound.observeEvent(viewLifecycleOwner) {
+            Toast.makeText(requireContext(), "Customer not found!", Toast.LENGTH_LONG).show()
         }
     }
 

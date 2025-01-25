@@ -4,5 +4,5 @@ import com.wisnitech.omiesales.data.model.Customer
 
 interface CustomerRepository {
     suspend fun addCustomer(customer: Customer): Long
-    suspend fun getCustomerByPhoneNumber(phoneNumber: String): Customer
+    suspend fun getCustomerByPhoneNumber(phoneNumber: String): Customer?
 }

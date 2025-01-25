@@ -4,6 +4,7 @@ import android.view.View
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.textfield.TextInputLayout
 import com.wisnitech.omiesales.ui.R
 
@@ -28,11 +29,6 @@ fun AppCompatTextView.setOrderCountValue(total: Double?) {
     }
 }
 
-@BindingAdapter("set_formatted_date")
-fun AppCompatTextView.setFormattedDate(date: String) {
-    text = date.getFormattedDate()
-}
-
 @BindingAdapter("set_search_visibility")
 fun TextInputLayout.setSearchEndIcon(isRegistered: Boolean) {
     if (isRegistered) {
@@ -43,6 +39,11 @@ fun TextInputLayout.setSearchEndIcon(isRegistered: Boolean) {
         endIconMode = TextInputLayout.END_ICON_NONE
         endIconDrawable = null
     }
+}
+
+@BindingAdapter("set_order_toolbar_title")
+fun MaterialToolbar.setToolbarTitle(title: String?) {
+    title?.let { setTitle("Order: $it") }
 }
 
 @BindingAdapter("set_product_code")

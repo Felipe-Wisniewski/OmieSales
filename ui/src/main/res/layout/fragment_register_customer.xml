@@ -41,13 +41,15 @@
                 android:id="@+id/text_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Customer name">
+                android:hint="Name">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edt_customer_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:enabled="@{!viewModel.isRegistered()}"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
                     android:imeOptions="actionNext"
                     android:inputType="textPersonName"
                     android:maxLines="1"
@@ -60,7 +62,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:hint="Customer phone"
+                android:hint="Phone"
                 app:set_search_visibility="@{viewModel.isRegistered}">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -69,7 +71,7 @@
                     android:layout_height="wrap_content"
                     android:imeOptions="actionDone"
                     android:inputType="number"
-                    android:maxLength="11"
+                    android:maxLength="15"
                     android:maxLines="1" />
 
             </com.google.android.material.textfield.TextInputLayout>

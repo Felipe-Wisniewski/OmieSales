@@ -21,7 +21,7 @@ interface SaleDao {
     fun saveCustomer(customer: Customer): Long
 
     @Query("SELECT * FROM customer WHERE phone = :phoneNumber")
-    fun loadCustomerByPhoneNumber(phoneNumber: String): Customer
+    fun loadCustomerByPhoneNumber(phoneNumber: String): Customer?
 
     @Insert(onConflict = OnConflictStrategy.ABORT)
     fun saveAllProducts(products: List<Product>)
