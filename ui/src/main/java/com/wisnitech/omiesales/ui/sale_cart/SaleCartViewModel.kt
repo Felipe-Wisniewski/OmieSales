@@ -36,9 +36,23 @@ class SaleCartViewModel(
     }
 
     private fun updateCart() = viewModelScope.launch {
-        withContext(Dispatchers.IO) {
-            productRepository.getOrder().collect { orderItems ->
-                _orderItems.postValue(orderItems)
+        val orders = withContext(Dispatchers.IO) {
+            productRepository.getOrder()
+        }
+
+        orders.collect { orderItems ->
+            _orderItems.value = orderItems
+        }
+    }
+
+    fun updateOrderItem(quantity: Int, orderItem: OrderItem) {
+        when {
+            quantity == 0 -> {
+                // TODO("remove item")
+            }
+
+            quantity != orderItem.quantity -> {
+                // TODO("update item")
             }
         }
     }

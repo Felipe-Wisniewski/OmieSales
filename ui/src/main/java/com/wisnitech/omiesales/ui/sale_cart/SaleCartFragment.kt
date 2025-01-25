@@ -66,7 +66,7 @@ class SaleCartFragment : Fragment() {
         }
         
         viewModel.orderPlaced.observeEvent(viewLifecycleOwner) {
-            findNavController().popBackStack(R.id.homeFragment, true)
+            findNavController().popBackStack(R.id.homeFragment, false)
         }
     }
 
@@ -74,10 +74,10 @@ class SaleCartFragment : Fragment() {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle("Confirm order")
             .setMessage("Confirm order!!")
-            .setNegativeButton("Cancel") { dialog, which ->
+            .setNegativeButton("Cancel") { dialog, _ ->
                 dialog.dismiss()
             }
-            .setPositiveButton("Confirm") { dialog, which ->
+            .setPositiveButton("Confirm") { dialog, _ ->
                 viewModel.placeOrder()
                 dialog.dismiss()
             }

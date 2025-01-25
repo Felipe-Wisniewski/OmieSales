@@ -12,7 +12,11 @@
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_registerCustomerFragment"
-            app:destination="@id/registerCustomerFragment" />
+            app:destination="@id/registerCustomerFragment"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_to_left"
+            app:popEnterAnim="@anim/slide_in_left_to_right"
+            app:popExitAnim="@anim/slide_out_to_right" />
     </fragment>
 
     <fragment
@@ -22,7 +26,11 @@
         tools:layout="@layout/fragment_register_customer">
         <action
             android:id="@+id/action_registerCustomerFragment_to_saleFragment"
-            app:destination="@id/saleFragment" />
+            app:destination="@id/saleFragment"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_to_left"
+            app:popEnterAnim="@anim/slide_in_left_to_right"
+            app:popExitAnim="@anim/slide_out_to_right" />
     </fragment>
 
     <fragment

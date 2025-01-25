@@ -29,7 +29,7 @@ interface SaleDao {
 //    @Delete
 //    suspend fun deleteCustomer(customer: Customer)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.ABORT)
     fun saveAllProducts(products: List<Product>)
 
 //    @Insert

@@ -27,7 +27,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="vertical"
-            app:is_visible_view="@{viewModel.orderItems == null}">
+            app:is_visible_view="@{viewModel.orderItems.size() == 0}">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"

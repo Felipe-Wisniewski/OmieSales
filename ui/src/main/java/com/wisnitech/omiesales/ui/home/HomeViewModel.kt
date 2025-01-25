@@ -39,11 +39,11 @@ class HomeViewModel(
 
         var total = 0.0
 
-        delay(3000)
-
         val result = withContext(Dispatchers.IO) {
             saleRepository.getSales()
         }
+
+        delay(1000)
 
         result.forEach { total += it.saleValue }
 

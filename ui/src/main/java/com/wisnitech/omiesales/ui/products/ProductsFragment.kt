@@ -5,8 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.widget.Button
+import androidx.appcompat.widget.AppCompatTextView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.wisnitech.omiesales.data.model.Product
+import com.wisnitech.omiesales.ui.R
 import com.wisnitech.omiesales.ui.databinding.FragmentProductsBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -33,6 +36,8 @@ class ProductsFragment : Fragment() {
 
         initView()
         initObservers()
+
+        viewModel.getAllProducts()
     }
 
     private fun initView() {
@@ -50,13 +55,30 @@ class ProductsFragment : Fragment() {
     }
 
     private fun setAddProductDialog(product: Product) {
-        Toast.makeText(requireContext(), "Product: ${product.name}", Toast.LENGTH_SHORT).show()
-        viewModel.setOrderItem(product, 1)
-    }
+        var quantity = 1
 
-    override fun onResume() {
-        super.onResume()
+        val dialog = MaterialAlertDialogBuilder(requireContext())
+            .setTitle(product.name)
+            .setView(R.layout.item_quantity_dialog_view)
+            .setNegativeButton("Cancel") { dialog, which ->
+                dialog.dismiss()
+            }
+            .setPositiveButton("Ok") { dialog, which ->
+                viewModel.setOrderItem(product, quantity)
+                dialog.dismiss()
+            }
+            .show()
 
-        viewModel.getAllProducts()
+        val textView = dialog.findViewById<AppCompatTextView>(R.id.txt_item_quantity)
+
+        dialog.findViewById<Button>(R.id.btn_remove_item)?.setOnClickListener {
+            if (quantity > 1) quantity--
+            textView?.text = "$quantity"
+        }
+
+        dialog.findViewById<Button>(R.id.btn_add_item)?.setOnClickListener {
+            quantity++
+            textView?.text = "$quantity"
+        }
     }
 }
