@@ -5,7 +5,6 @@ import java.util.Calendar
 import java.util.Locale
 import java.util.TimeZone
 
-
 fun Calendar.getCurrentDate(): String {
     return try {
         val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale("pt", "BR")).apply {
@@ -21,7 +20,7 @@ fun Calendar.getCurrentDate(): String {
 fun String.getFormattedDate(): String {
     return try {
         val oldDate = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale("pt", "BR")).parse(this)
-        SimpleDateFormat("dd/MM/yyyy - HH:mm:ss", Locale("pt", "BR")).format(oldDate)
+        SimpleDateFormat("dd/MM/yyyy - HH:mm:ss", Locale("pt", "BR")).format(oldDate ?: "")
     } catch (e: Exception) {
         e.printStackTrace()
         this

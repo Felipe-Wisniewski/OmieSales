@@ -6,17 +6,15 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.wisnitech.omiesales.data.model.SumSales
-import com.wisnitech.omiesales.ui.databinding.ItemOrderViewBinding
-import com.wisnitech.omiesales.ui.utils.getFormattedDate
-import com.wisnitech.omiesales.ui.utils.toCurrencyNoCoin
+import com.wisnitech.omiesales.ui.databinding.ItemSaleViewBinding
 
-class HomeOrdersAdapter(
-    private val itemOnClick: (order: SumSales) -> Unit
-) : ListAdapter<SumSales, HomeOrdersAdapter.OrdersViewHolder>(ORDER_DIFF) {
+class HomeSalesAdapter(
+    private val itemOnClick: (sale: SumSales) -> Unit
+) : ListAdapter<SumSales, HomeSalesAdapter.OrdersViewHolder>(ORDER_DIFF) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrdersViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val binding = ItemOrderViewBinding.inflate(layoutInflater, parent, false)
+        val binding = ItemSaleViewBinding.inflate(layoutInflater, parent, false)
         return OrdersViewHolder(binding)
     }
 
@@ -26,20 +24,15 @@ class HomeOrdersAdapter(
     }
 
     inner class OrdersViewHolder(
-        private val binding: ItemOrderViewBinding
+        private val binding: ItemSaleViewBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: SumSales) {
-            binding.setData(item)
+            binding.apply {
+                sumSale = item
+                containerItemSaleView.setOnClickListener { itemOnClick(item) }
+            }
         }
-    }
-
-    private fun ItemOrderViewBinding.setData(item: SumSales) {
-        itemOrderName.text = item.customerName
-        itemOrderDate.text = item.saleDate.getFormattedDate()
-        itemOrderValue.text = "R$ ${item.saleValue.toCurrencyNoCoin()}"
-        itemOrderNumber.text = "n° ${item.saleId}"
-        containerItemOrderView.setOnClickListener { itemOnClick(item) }
     }
 
     companion object {

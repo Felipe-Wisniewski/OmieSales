@@ -15,7 +15,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.wisnitech.omiesales.ui.R
 import com.wisnitech.omiesales.ui.databinding.FragmentSaleBinding
 import com.wisnitech.omiesales.ui.products.ProductsFragment
-import com.wisnitech.omiesales.ui.sale_cart.SaleCartFragment
+import com.wisnitech.omiesales.ui.order_cart.OrderCartFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SaleFragment : Fragment() {
@@ -99,7 +99,7 @@ class SaleFragment : Fragment() {
 
         override fun createFragment(position: Int): Fragment {
             return if (position == 0) {
-                SaleCartFragment.newInstance(saleId = viewModel.saleId.value ?: 0L)
+                OrderCartFragment.newInstance(saleId = viewModel.saleId.value ?: 0L)
             } else {
                 ProductsFragment()
             }

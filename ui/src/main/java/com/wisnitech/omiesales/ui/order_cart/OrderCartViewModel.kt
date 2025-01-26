@@ -1,4 +1,4 @@
-package com.wisnitech.omiesales.ui.sale_cart
+package com.wisnitech.omiesales.ui.order_cart
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -14,7 +14,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class SaleCartViewModel(
+class OrderCartViewModel(
     private val productRepository: ProductRepository,
     private val saleRepository: SaleRepository
 ) : ViewModel() {
@@ -65,6 +65,7 @@ class SaleCartViewModel(
                 productId = orderItem.productId,
                 productName = orderItem.productName,
                 productPrice = orderItem.productPrice,
+                productPriceUnit = orderItem.productPriceUnit,
                 quantity = quantity,
                 total = totalValueOfProducts(orderItem.productPrice, quantity)
             )

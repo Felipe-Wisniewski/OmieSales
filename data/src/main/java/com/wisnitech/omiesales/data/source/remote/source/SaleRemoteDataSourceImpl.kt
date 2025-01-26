@@ -4,7 +4,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.wisnitech.omiesales.data.model.Sale
 
-class SaleRemoteDataSourceImpl : SaleRemoteDataSource {
+internal class SaleRemoteDataSourceImpl : SaleRemoteDataSource {
 
     override suspend fun loadSales(): List<Sale> {
         val listType = object : TypeToken<List<Sale>>() {}.type

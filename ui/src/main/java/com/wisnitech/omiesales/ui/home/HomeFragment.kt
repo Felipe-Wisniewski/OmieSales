@@ -15,7 +15,7 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private val viewModel by viewModel<HomeViewModel>()
 
-    private val ordersAdapter = HomeOrdersAdapter(::itemOnClick)
+    private val salesAdapter = HomeSalesAdapter(::itemOnClick)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,7 +37,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun initView() {
-        binding.rvSalesHome.adapter = ordersAdapter
+        binding.rvSalesHome.adapter = salesAdapter
     }
 
     private fun initListeners() {
@@ -46,7 +46,7 @@ class HomeFragment : Fragment() {
 
     private fun initObservers() {
         viewModel.sales.observe(viewLifecycleOwner) {
-            ordersAdapter.submitList(it)
+            salesAdapter.submitList(it)
         }
     }
 
@@ -65,6 +65,6 @@ class HomeFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        viewModel.getAllOrders()
+        viewModel.getAllSales()
     }
 }

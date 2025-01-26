@@ -1,4 +1,4 @@
-package com.wisnitech.omiesales.ui.sale_cart
+package com.wisnitech.omiesales.ui.order_cart
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,9 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.wisnitech.omiesales.data.model.OrderItem
 import com.wisnitech.omiesales.ui.databinding.ItemCartViewBinding
 
-class SaleCartAdapter(
+class OrderCartAdapter(
     private val itemOnClick: (orderItem: OrderItem) -> Unit
-) : ListAdapter<OrderItem, SaleCartAdapter.CartViewHolder>(ITEM_DIFF) {
+) : ListAdapter<OrderItem, OrderCartAdapter.CartViewHolder>(ITEM_DIFF) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)

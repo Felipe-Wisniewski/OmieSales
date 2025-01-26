@@ -13,6 +13,7 @@ data class OrderItem(
     val productId: Long,
     val productName: String,
     val productPrice: Double,
+    val productPriceUnit: String,
     val quantity: Int,
     val total: Double
 ) : Parcelable

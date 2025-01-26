@@ -10,49 +10,79 @@
             type="com.wisnitech.omiesales.data.model.OrderItem" />
     </data>
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="16dp">
+        android:paddingHorizontal="16dp">
 
         <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/item_cart_image"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@drawable/ic_image_24" />
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text="@{orderItem.productName}"
-                android:textStyle="bold"
-                tools:text="Cheesecake de Frutas Vermelhas e Uva Roxa" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textSize="11sp"
-                app:set_item_quantity="@{orderItem.quantity}"
-                tools:text="Qtd: 5" />
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
+            android:src="@drawable/ic_image_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/item_cart_name"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="8dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{orderItem.productName}"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/item_cart_quantity"
+            app:layout_constraintEnd_toStartOf="@+id/item_cart_total_value"
+            app:layout_constraintStart_toEndOf="@+id/item_cart_image"
+            app:layout_constraintTop_toBottomOf="@+id/item_cart_image"
+            tools:text="Cheesecake de Frutas Vermelhas e Uva Roxa" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/item_cart_total_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/item_cart_name"
+            app:layout_constraintTop_toTopOf="@+id/item_cart_name"
             app:set_currency_value="@{orderItem.total}"
             tools:text="R$ 5,00" />
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/item_cart_quantity"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="4dp"
+            android:textSize="11sp"
+            app:layout_constraintBottom_toTopOf="@+id/item_cart_image"
+            app:layout_constraintStart_toStartOf="@+id/item_cart_name"
+            app:layout_constraintTop_toBottomOf="@+id/item_cart_name"
+            app:set_item_cart_quantity="@{orderItem.quantity}"
+            tools:text="Qtd: 5" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/item_cart_item_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="11sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/item_cart_quantity"
+            app:set_item_cart_item_price="@{orderItem.productPrice}"
+            app:set_item_cart_item_unit="@{orderItem.productPriceUnit}"
+            tools:text="Price Un: R$ 1,00" />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/item_cart_divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/item_cart_image" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

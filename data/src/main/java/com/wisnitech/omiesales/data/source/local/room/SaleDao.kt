@@ -15,7 +15,7 @@ import com.wisnitech.omiesales.data.model.SumSales
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface SaleDao {
+internal interface SaleDao {
 
     @Insert(onConflict = OnConflictStrategy.ABORT)
     fun saveCustomer(customer: Customer): Long

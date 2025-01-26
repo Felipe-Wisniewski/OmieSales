@@ -35,11 +35,12 @@ class ProductsViewModel(
         }
     }
 
-    fun setOrderItem(product: Product, quantity: Int) = viewModelScope.launch{
+    fun setOrderItem(product: Product, quantity: Int) = viewModelScope.launch {
         val item = OrderItem(
             productId = product.id,
             productName = product.name,
             productPrice = product.price,
+            productPriceUnit = product.priceUnit.value,
             quantity = quantity,
             total = totalValueOfProducts(product.price, quantity)
         )

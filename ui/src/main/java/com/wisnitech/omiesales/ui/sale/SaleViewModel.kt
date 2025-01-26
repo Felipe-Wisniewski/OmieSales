@@ -25,8 +25,8 @@ class SaleViewModel(
     private val _customerName = MutableLiveData<String>()
     val customerName: LiveData<String> get() = _customerName
 
-    private val _orderTotalValue = MutableLiveData<String>()
-    val orderTotalValue: LiveData<String> get() = _orderTotalValue
+    private val _orderTotalValue = MutableLiveData<Double>()
+    val orderTotalValue: LiveData<Double> get() = _orderTotalValue
 
     private val _orderTotalItems = MutableLiveData<String>()
     val orderTotalItems: LiveData<String> get() = _orderTotalItems
@@ -50,7 +50,7 @@ class SaleViewModel(
                 }
 
                 _orderTotalItems.postValue("Items: $totalItems")
-                _orderTotalValue.postValue("R$ ${totalValue.toCurrencyNoCoin()}")
+                _orderTotalValue.postValue(totalValue)
             }
         }
     }

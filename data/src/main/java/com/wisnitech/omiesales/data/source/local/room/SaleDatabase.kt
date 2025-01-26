@@ -13,6 +13,6 @@ import com.wisnitech.omiesales.data.model.SaleProduct
     version = 1,
     exportSchema = false
 )
-abstract class SaleDatabase : RoomDatabase() {
+internal abstract class SaleDatabase : RoomDatabase() {
     abstract fun getSaleDao(): SaleDao
 }

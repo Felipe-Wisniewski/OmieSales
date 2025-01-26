@@ -43,8 +43,8 @@
                 android:layout_weight="2"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:set_order_count="@{viewModel.orderCount}"
-                tools:text="Orders: 4" />
+                app:set_sale_count="@{viewModel.saleCount}"
+                tools:text="Sales: 4" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
@@ -53,25 +53,25 @@
                 android:gravity="end"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:set_order_count_value="@{viewModel.orderTotalValue}"
+                app:set_total_currency_value="@{viewModel.salesValue}"
                 tools:text="Total: R$ 20,00" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_sales_home"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scrollbars="vertical"
-            app:is_visible_view="@{viewModel.sales != null}"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:itemCount="4"
-            tools:listitem="@layout/item_order_view"
-            tools:visibility="visible" />
-
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_sales_home"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="vertical"
+                app:is_visible_view="@{viewModel.sales != null}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:itemCount="4"
+                tools:listitem="@layout/item_sale_view"
+                tools:visibility="visible" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -91,7 +91,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="No orders found!!" />
+                    android:text="No sales found!!" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -112,7 +112,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="Loading orders" />
+                    android:text="Loading sales..." />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 

@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.wisnitech.omiesales.ui.sale_cart.SaleCartViewModel" />
+            type="com.wisnitech.omiesales.ui.order_cart.OrderCartViewModel" />
 
     </data>
 
@@ -15,7 +15,7 @@
         android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_sale_cart"
+            android:id="@+id/rv_order_cart"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone"
@@ -44,7 +44,7 @@
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_confirm_sale"
+            android:id="@+id/fab_confirm_order"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"

@@ -5,7 +5,7 @@ import com.wisnitech.omiesales.data.model.Product
 import com.wisnitech.omiesales.data.source.local.room.SaleDao
 import kotlinx.coroutines.flow.Flow
 
-class ProductLocalDataSourceImpl(private val dao: SaleDao) : ProductLocalDataSource {
+internal class ProductLocalDataSourceImpl(private val dao: SaleDao) : ProductLocalDataSource {
 
     override suspend fun saveAllProducts(products: List<Product>) = dao.saveAllProducts(products)
 

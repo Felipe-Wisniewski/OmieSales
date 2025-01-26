@@ -13,18 +13,39 @@ fun View.setVisibility(isVisible: Boolean) {
     visibility = if (isVisible) View.VISIBLE else View.GONE
 }
 
-@BindingAdapter("set_order_count")
-fun AppCompatTextView.setOrderCount(count: Int?) {
+@BindingAdapter("set_sale_count")
+fun AppCompatTextView.setSaleCount(count: Int?) {
     count?.let {
-        val concatenate = "Orders: $it"
+        val concatenate = "Sales: $it"
         text = concatenate
     }
 }
 
-@BindingAdapter("set_order_count_value")
-fun AppCompatTextView.setOrderCountValue(total: Double?) {
+@BindingAdapter("set_total_currency_value")
+fun AppCompatTextView.setTotalCurrencyValue(total: Double?) {
     total?.let {
         val concatenate = "Total: R$ ${it.toCurrencyNoCoin()}"
+        text = concatenate
+    }
+}
+
+@BindingAdapter("set_currency_value")
+fun AppCompatTextView.setValueWithCurrencySymbol(total: Double?) {
+    total?.let {
+        val concatenate = "R$ ${it.toCurrencyNoCoin()}"
+        text = concatenate
+    }
+}
+
+@BindingAdapter("set_formatted_date")
+fun AppCompatTextView.setFormattedDate(date: String?) {
+    date?.let { text = it.getFormattedDate() }
+}
+
+@BindingAdapter("set_item_sale_number")
+fun AppCompatTextView.setItemSaleNumber(saleId: Long?) {
+    saleId?.let {
+        val concatenate = "Sale: $saleId"
         text = concatenate
     }
 }
@@ -63,18 +84,18 @@ fun AppCompatTextView.setProductPrice(price: Double?, unit: String?) {
     }
 }
 
-@BindingAdapter("set_item_quantity")
-fun AppCompatTextView.setTotalItems(items: Int?) {
+@BindingAdapter("set_item_cart_quantity")
+fun AppCompatTextView.setItemCartQuantity(items: Int?) {
     items?.let {
         val concatenate = "Qtd: $it"
         text = concatenate
     }
 }
 
-@BindingAdapter("set_currency_value")
-fun AppCompatTextView.setValueWithCurrencySymbol(total: Double?) {
-    total?.let {
-        val concatenate = "R$ ${it.toCurrencyNoCoin()}"
+@BindingAdapter(value = ["set_item_cart_item_price", "set_item_cart_item_unit"], requireAll = true)
+fun AppCompatTextView.setItemCartItemPrice(price: Double?, unit: String?) {
+    price?.let {
+        val concatenate = "Price${(" $unit")}: R$ ${it.toCurrencyNoCoin()}"
         text = concatenate
     }
 }

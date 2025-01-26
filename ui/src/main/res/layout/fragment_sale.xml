@@ -24,9 +24,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:navigationIcon="@drawable/ic_close"
-                tools:title="Order: 1"
                 app:set_order_toolbar_title="@{viewModel.saleId.toString()}"
-                app:titleCentered="true" />
+                app:titleCentered="true"
+                tools:title="Order: 1" />
 
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -66,8 +66,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="end"
-                    android:text="@{viewModel.orderTotalValue}"
                     android:textStyle="bold"
+                    app:set_total_currency_value="@{viewModel.orderTotalValue}"
                     tools:text="Total: R$ 154,58" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>

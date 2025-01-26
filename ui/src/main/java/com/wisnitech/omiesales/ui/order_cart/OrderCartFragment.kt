@@ -1,4 +1,4 @@
-package com.wisnitech.omiesales.ui.sale_cart
+package com.wisnitech.omiesales.ui.order_cart
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,16 +11,16 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.wisnitech.omiesales.data.model.OrderItem
 import com.wisnitech.omiesales.ui.R
-import com.wisnitech.omiesales.ui.databinding.FragmentSaleCartBinding
+import com.wisnitech.omiesales.ui.databinding.FragmentOrderCartBinding
 import com.wisnitech.omiesales.ui.utils.observeEvent
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class SaleCartFragment : Fragment() {
+class OrderCartFragment : Fragment() {
 
-    private lateinit var binding: FragmentSaleCartBinding
-    private val viewModel by viewModel<SaleCartViewModel>()
+    private lateinit var binding: FragmentOrderCartBinding
+    private val viewModel by viewModel<OrderCartViewModel>()
 
-    private val saleCartAdapter = SaleCartAdapter(::itemOnClick)
+    private val orderCartAdapter = OrderCartAdapter(::itemOnClick)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,9 +35,9 @@ class SaleCartFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentSaleCartBinding.inflate(layoutInflater).apply {
+        binding = FragmentOrderCartBinding.inflate(layoutInflater).apply {
             lifecycleOwner = viewLifecycleOwner
-            viewModel = this@SaleCartFragment.viewModel
+            viewModel = this@OrderCartFragment.viewModel
         }
         return binding.root
     }
@@ -52,18 +52,18 @@ class SaleCartFragment : Fragment() {
     }
 
     private fun initView() {
-        binding.rvSaleCart.adapter = saleCartAdapter
+        binding.rvOrderCart.adapter = orderCartAdapter
     }
 
     private fun initListeners() {
-        binding.fabConfirmSale.setOnClickListener {
+        binding.fabConfirmOrder.setOnClickListener {
             setConfirmDialog()
         }
     }
 
     private fun initObserver() {
         viewModel.orderItems.observe(viewLifecycleOwner) {
-            saleCartAdapter.submitList(it)
+            orderCartAdapter.submitList(it)
         }
 
         viewModel.orderPlaced.observeEvent(viewLifecycleOwner) {
@@ -108,7 +108,7 @@ class SaleCartFragment : Fragment() {
         textView?.text = "$quantity"
 
         dialog.findViewById<Button>(R.id.btn_remove_item)?.setOnClickListener {
-            quantity--
+            if (quantity > 0) quantity--
             textView?.text = "$quantity"
         }
 
@@ -121,7 +121,7 @@ class SaleCartFragment : Fragment() {
     companion object {
         private const val SALE_ID = "sale_id"
 
-        fun newInstance(saleId: Long) = SaleCartFragment().apply {
+        fun newInstance(saleId: Long) = OrderCartFragment().apply {
             arguments = Bundle().apply {
                 putLong(SALE_ID, saleId)
             }

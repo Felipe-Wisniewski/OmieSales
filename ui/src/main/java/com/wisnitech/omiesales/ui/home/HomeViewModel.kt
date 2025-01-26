@@ -24,17 +24,17 @@ class HomeViewModel(
     private val _sales = MutableLiveData<List<SumSales>>()
     val sales: LiveData<List<SumSales>> get() = _sales
 
-    private val _orderCount = MutableLiveData(0)
-    val orderCount: LiveData<Int> get() = _orderCount
+    private val _saleCount = MutableLiveData(0)
+    val saleCount: LiveData<Int> get() = _saleCount
 
-    private val _orderTotalValue = MutableLiveData(0.0)
-    val orderTotalValue: LiveData<Double> get() = _orderTotalValue
+    private val _salesValue = MutableLiveData(0.0)
+    val salesValue: LiveData<Double> get() = _salesValue
 
     init {
         updateProductsFromRemote()
     }
 
-    fun getAllOrders() = viewModelScope.launch {
+    fun getAllSales() = viewModelScope.launch {
         _status.value = Status.LOADING
 
         var total = 0.0
@@ -48,8 +48,8 @@ class HomeViewModel(
         result.forEach { total += it.saleValue }
 
         _sales.value = result
-        _orderCount.value = result.size
-        _orderTotalValue.value = total
+        _saleCount.value = result.size
+        _salesValue.value = total
 
         _status.value = Status.SUCCESS
     }
