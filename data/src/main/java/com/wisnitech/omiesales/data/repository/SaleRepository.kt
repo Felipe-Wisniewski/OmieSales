@@ -2,6 +2,7 @@ package com.wisnitech.omiesales.data.repository
 
 import com.wisnitech.omiesales.data.model.Sale
 import com.wisnitech.omiesales.data.model.SaleProduct
+import com.wisnitech.omiesales.data.model.SaleProductClient
 import com.wisnitech.omiesales.data.model.SumSales
 
 interface SaleRepository {
@@ -9,4 +10,5 @@ interface SaleRepository {
     suspend fun removeSale(saleId: Long)
     suspend fun addProductOnSale(saleProduct: SaleProduct): Long
     suspend fun getSales(): List<SumSales>
+    suspend fun getProductListBySaleId(saleId: Long): List<SaleProductClient>
 }

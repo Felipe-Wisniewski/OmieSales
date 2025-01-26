@@ -21,6 +21,11 @@ fun AppCompatTextView.setSaleCount(count: Int?) {
     }
 }
 
+@BindingAdapter("set_toolbar_title")
+fun MaterialToolbar.setToolbarTitle(title: String?) {
+    title?.let { this.title = title }
+}
+
 @BindingAdapter("set_total_currency_value")
 fun AppCompatTextView.setTotalCurrencyValue(total: Double?) {
     total?.let {
@@ -45,7 +50,7 @@ fun AppCompatTextView.setFormattedDate(date: String?) {
 @BindingAdapter("set_item_sale_number")
 fun AppCompatTextView.setItemSaleNumber(saleId: Long?) {
     saleId?.let {
-        val concatenate = "Sale: $saleId"
+        val concatenate = "Sale n°: $saleId"
         text = concatenate
     }
 }

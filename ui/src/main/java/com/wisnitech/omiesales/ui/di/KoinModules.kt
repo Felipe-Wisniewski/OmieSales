@@ -11,6 +11,7 @@ import com.wisnitech.omiesales.ui.home.HomeViewModel
 import com.wisnitech.omiesales.ui.products.ProductsViewModel
 import com.wisnitech.omiesales.ui.sale.SaleViewModel
 import com.wisnitech.omiesales.ui.order_cart.OrderCartViewModel
+import com.wisnitech.omiesales.ui.sale_details.SaleDetailsViewModel
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
@@ -18,6 +19,7 @@ val uiModules = module {
 
     viewModel { HomeViewModel(get(), get()) }
     viewModel { RegisterCustomerViewModel(get()) }
+    viewModel { SaleDetailsViewModel(get()) }
     viewModel { SaleViewModel(get()) }
     viewModel { OrderCartViewModel(get(), get()) }
     viewModel { ProductsViewModel(get()) }

@@ -11,6 +11,7 @@ import com.wisnitech.omiesales.data.model.OrderItem
 import com.wisnitech.omiesales.data.model.Product
 import com.wisnitech.omiesales.data.model.Sale
 import com.wisnitech.omiesales.data.model.SaleProduct
+import com.wisnitech.omiesales.data.model.SaleProductClient
 import com.wisnitech.omiesales.data.model.SumSales
 import kotlinx.coroutines.flow.Flow
 
@@ -66,4 +67,21 @@ internal interface SaleDao {
         """
     )
     fun loadSumOfSales(): List<SumSales>
+
+    @Transaction
+    @Query(
+        """
+        SELECT
+ 	        p.name AS productName,
+            sp.quantity AS productQuantity,
+            p.price AS productPrice,
+            p.priceUnit,
+	        (p.price * sp.quantity) AS totalValue
+        FROM saleProduct sp
+        INNER JOIN product p ON sp.productId = p.id
+        INNER JOIN sale s ON sp.saleId = :saleId
+        GROUP BY p.id
+        """
+    )
+    fun loadProductListBySaleId(saleId: Long): List<SaleProductClient>
 }

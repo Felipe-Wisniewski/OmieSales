@@ -21,4 +21,7 @@ class SaleRepositoryImpl(
     override suspend fun getSales(): List<SumSales> {
         return saleLocal.loadSumOfSales()
     }
+
+    override suspend fun getProductListBySaleId(saleId: Long) =
+        saleLocal.loadProductListBySaleId(saleId)
 }

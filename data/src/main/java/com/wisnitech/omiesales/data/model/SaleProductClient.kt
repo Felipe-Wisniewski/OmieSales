@@ -1,23 +1,14 @@
 package com.wisnitech.omiesales.data.model
 
-import androidx.room.Embedded
-import androidx.room.Junction
-import androidx.room.Relation
+import android.os.Parcelable
+import com.wisnitech.omiesales.data.model.Product.PriceUnit
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class SaleProductClient(
-    @Embedded
-    val sale: Sale,
-    @Relation(parentColumn = "customerId", entityColumn = "id")
-    val customer: Customer,
-    @Relation(
-        entity = Product::class,
-        parentColumn = "id",
-        entityColumn = "id",
-        associateBy = Junction(
-            value = SaleProduct::class,
-            parentColumn = "saleId",
-            entityColumn = "productId"
-        )
-    )
-    val products: List<Product>
-)
+    val productName: String,
+    val productQuantity: Int,
+    val productPrice: Double,
+    val priceUnit: PriceUnit,
+    val totalValue: Double
+) : Parcelable

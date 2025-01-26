@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import com.wisnitech.omiesales.data.model.SumSales
 import com.wisnitech.omiesales.ui.databinding.FragmentHomeBinding
@@ -51,15 +52,19 @@ class HomeFragment : Fragment() {
     }
 
     private fun itemOnClick(sales: SumSales) {
-
+        navigateToSaleDetails(sales)
     }
 
-    private fun navigateToSaleDetails() {
-
+    private fun navigateToSaleDetails(sales: SumSales) {
+        navigateTo(HomeFragmentDirections.actionHomeFragmentToSaleDetailsFragment(sales))
     }
 
     private fun navigateToRegisterCustomer() {
-        findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToRegisterCustomerFragment())
+        navigateTo(HomeFragmentDirections.actionHomeFragmentToRegisterCustomerFragment())
+    }
+
+    private fun navigateTo(directions: NavDirections) {
+        findNavController().navigate(directions)
     }
 
     override fun onResume() {

@@ -17,6 +17,13 @@
             app:exitAnim="@anim/slide_out_to_left"
             app:popEnterAnim="@anim/slide_in_left_to_right"
             app:popExitAnim="@anim/slide_out_to_right" />
+        <action
+            android:id="@+id/action_homeFragment_to_saleDetailsFragment"
+            app:destination="@id/saleDetailsFragment"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_to_left"
+            app:popEnterAnim="@anim/slide_in_left_to_right"
+            app:popExitAnim="@anim/slide_out_to_right" />
     </fragment>
 
     <fragment
@@ -31,6 +38,16 @@
             app:exitAnim="@anim/slide_out_to_left"
             app:popEnterAnim="@anim/slide_in_left_to_right"
             app:popExitAnim="@anim/slide_out_to_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/saleDetailsFragment"
+        android:name="com.wisnitech.omiesales.ui.sale_details.SaleDetailsFragment"
+        android:label="SaleDetailsFragment"
+        tools:layout="@layout/fragment_sale_details">
+        <argument
+            android:name="sales"
+            app:argType="com.wisnitech.omiesales.data.model.SumSales" />
     </fragment>
 
     <fragment
