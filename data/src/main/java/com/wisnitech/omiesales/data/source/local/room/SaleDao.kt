@@ -38,8 +38,11 @@ internal interface SaleDao {
     @Delete
     fun deleteOrderItem(orderItem: OrderItem)
 
+    @Query("DELETE FROM orderitem")
+    fun deleteOrderItems()
+
     @Insert
-    fun saveSale(sale: Sale): Long
+    fun saveSale(sale: Sale): Long?
 
     @Query("DELETE FROM sale WHERE id = :saleId")
     fun deleteSale(saleId: Long)

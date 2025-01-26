@@ -21,4 +21,6 @@ internal class ProductLocalDataSourceImpl(private val dao: SaleDao) : ProductLoc
     override suspend fun loadOrder(): Flow<List<OrderItem>> = dao.loadOrder()
 
     override suspend fun deleteOrderItem(orderItem: OrderItem) = dao.deleteOrderItem(orderItem)
+
+    override suspend fun deleteOrderItems() = dao.deleteOrderItems()
 }

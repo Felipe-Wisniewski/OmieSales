@@ -26,8 +26,8 @@ class OrderCartFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         arguments?.let {
-            val saleId = it.getLong(SALE_ID)
-            viewModel.setSaleId(saleId)
+            val customerId = it.getLong(CUSTOMER_ID)
+            viewModel.setCustomerId(customerId)
         }
     }
 
@@ -72,14 +72,17 @@ class OrderCartFragment : Fragment() {
     }
 
     private fun setConfirmDialog() {
+        val message =
+            "Close the order ${viewModel.orderItems.value?.size.let { "with $it items" }}?"
+
         MaterialAlertDialogBuilder(requireContext())
             .setTitle("Confirm order")
-            .setMessage("Confirm order!!")
+            .setMessage(message)
             .setNegativeButton("Cancel") { dialog, _ ->
                 dialog.dismiss()
             }
             .setPositiveButton("Confirm") { dialog, _ ->
-                viewModel.placeOrder()
+                viewModel.setNewSale()
                 dialog.dismiss()
             }
             .show()
@@ -119,11 +122,11 @@ class OrderCartFragment : Fragment() {
     }
 
     companion object {
-        private const val SALE_ID = "sale_id"
+        private const val CUSTOMER_ID = "customer_id"
 
-        fun newInstance(saleId: Long) = OrderCartFragment().apply {
+        fun newInstance(customerId: Long) = OrderCartFragment().apply {
             arguments = Bundle().apply {
-                putLong(SALE_ID, saleId)
+                putLong(CUSTOMER_ID, customerId)
             }
         }
     }

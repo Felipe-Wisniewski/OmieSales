@@ -62,11 +62,6 @@ fun TextInputLayout.setSearchEndIcon(isRegistered: Boolean) {
     }
 }
 
-@BindingAdapter("set_order_toolbar_title")
-fun MaterialToolbar.setToolbarTitle(title: String?) {
-    title?.let { setTitle("Order: $it") }
-}
-
 @BindingAdapter("set_product_code")
 fun AppCompatTextView.setProductCode(code: String?) {
     code?.let {

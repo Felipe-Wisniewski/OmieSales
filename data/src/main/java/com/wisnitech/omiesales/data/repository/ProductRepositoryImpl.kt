@@ -32,6 +32,8 @@ class ProductRepositoryImpl(
     override suspend fun removeOrderItem(orderItem: OrderItem) =
         productLocal.deleteOrderItem(orderItem)
 
+    override suspend fun removeOrderItems() = productLocal.deleteOrderItems()
+
     private suspend fun addAllProducts(products: List<Product>) {
         productLocal.saveAllProducts(products)
     }

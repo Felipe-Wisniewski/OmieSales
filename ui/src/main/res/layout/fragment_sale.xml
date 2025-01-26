@@ -23,10 +23,9 @@
                 style="@style/Widget.MaterialComponents.Toolbar.Primary"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                app:title="Order"
                 app:navigationIcon="@drawable/ic_close"
-                app:set_order_toolbar_title="@{viewModel.saleId.toString()}"
-                app:titleCentered="true"
-                tools:title="Order: 1" />
+                app:titleCentered="true" />
 
         </com.google.android.material.appbar.AppBarLayout>
 

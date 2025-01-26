@@ -11,4 +11,5 @@ interface ProductRepository {
     suspend fun updateOrderItem(oldItem: OrderItem, newItem: OrderItem)
     suspend fun getOrder(): Flow<List<OrderItem>>
     suspend fun removeOrderItem(orderItem: OrderItem)
+    suspend fun removeOrderItems()
 }

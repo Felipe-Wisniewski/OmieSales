@@ -34,7 +34,6 @@ class SaleFragment : Fragment() {
         }
 
         viewModel.setCustomerName(args.customerName)
-        viewModel.setNewSale(args.customerId)
     }
 
     override fun onCreateView(
@@ -51,23 +50,13 @@ class SaleFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setViewPager()
         initListeners()
-        initObservers()
     }
 
     private fun initListeners() {
         binding.toolbarSale.setNavigationOnClickListener {
             setConfirmCloseOrder()
-        }
-    }
-
-    private fun initObservers() {
-        viewModel.saleId.observe(viewLifecycleOwner) {
-            setViewPager()
-        }
-
-        viewModel.saleDeleted.observe(viewLifecycleOwner) {
-            findNavController().popBackStack(R.id.homeFragment, false)
         }
     }
 
@@ -78,7 +67,8 @@ class SaleFragment : Fragment() {
                 dialog.dismiss()
             }
             .setPositiveButton("Yes") { dialog, _ ->
-                viewModel.deleteSale()
+                viewModel.removeAllItemsFromCart()
+                findNavController().popBackStack(R.id.homeFragment, false)
                 dialog.dismiss()
             }
             .show()
@@ -99,7 +89,7 @@ class SaleFragment : Fragment() {
 
         override fun createFragment(position: Int): Fragment {
             return if (position == 0) {
-                OrderCartFragment.newInstance(saleId = viewModel.saleId.value ?: 0L)
+                OrderCartFragment.newInstance(customerId = args.customerId)
             } else {
                 ProductsFragment()
             }

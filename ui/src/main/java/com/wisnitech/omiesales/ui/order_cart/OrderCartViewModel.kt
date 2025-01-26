@@ -5,21 +5,24 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wisnitech.omiesales.data.model.OrderItem
+import com.wisnitech.omiesales.data.model.Sale
 import com.wisnitech.omiesales.data.model.SaleProduct
 import com.wisnitech.omiesales.data.repository.ProductRepository
 import com.wisnitech.omiesales.data.repository.SaleRepository
 import com.wisnitech.omiesales.ui.utils.Event
+import com.wisnitech.omiesales.ui.utils.getCurrentDate
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.Calendar
 
 class OrderCartViewModel(
     private val productRepository: ProductRepository,
     private val saleRepository: SaleRepository
 ) : ViewModel() {
 
-    private var _saleId: Long = 0
+    private var _customerId: Long = 0
 
     private val _orderItems = MutableLiveData<List<OrderItem>>()
     val orderItems: LiveData<List<OrderItem>> get() = _orderItems
@@ -31,17 +34,17 @@ class OrderCartViewModel(
         updateCart()
     }
 
-    fun setSaleId(saleId: Long) {
-        _saleId = saleId
+    fun setCustomerId(customerId: Long) {
+        _customerId = customerId
     }
 
     private fun updateCart() = viewModelScope.launch {
-        val orders = withContext(Dispatchers.IO) {
+        val order = withContext(Dispatchers.IO) {
             productRepository.getOrder()
         }
 
-        orders.collect { orderItems ->
-            _orderItems.value = orderItems
+        order.collect { items ->
+            _orderItems.value = items
         }
     }
 
@@ -73,28 +76,37 @@ class OrderCartViewModel(
         }
     }
 
-    fun placeOrder() = viewModelScope.launch {
-        if (_saleId != 0L) {
+    fun setNewSale() = viewModelScope.launch {
+        val sale = Sale(
+            customerId = _customerId,
+            saleDate = Calendar.getInstance().getCurrentDate()
+        )
 
-            val orders = orderItems.value
+        val saleId = async(Dispatchers.IO) {
+            saleRepository.addSale(sale)
+        }
 
-            orders?.forEach { item ->
-                val sale = SaleProduct(_saleId, item.productId, item.quantity)
+        placeOrder(saleId.await())
+    }
 
-                val result = async(Dispatchers.IO) { saleRepository.addProductOnSale(sale) }
+    private fun placeOrder(saleId: Long?) = viewModelScope.launch {
+        if (saleId != null) {
+            val order = orderItems.value
 
-                // TODO("REMOVE ALL ITEMS")
-                if (result.await() != 0L) {
-                    withContext(Dispatchers.IO) { productRepository.removeOrderItem(item) }
+            order?.forEach { item ->
+                val sale = SaleProduct(saleId, item.productId, item.quantity)
+                withContext(Dispatchers.IO) {
+                    saleRepository.addProductOnSale(sale)
                 }
             }.apply {
+                removeAllItemsFromCart()
                 _orderPlaced.value = Event(Unit)
             }
         }
     }
 
-    fun deleteSale() {
-
+    private fun removeAllItemsFromCart() = viewModelScope.launch {
+        withContext(Dispatchers.IO) { productRepository.removeOrderItems() }
     }
 
     private fun totalValueOfProducts(price: Double, quantity: Int) = quantity * price

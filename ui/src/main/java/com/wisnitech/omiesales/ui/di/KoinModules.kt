@@ -18,7 +18,7 @@ val uiModules = module {
 
     viewModel { HomeViewModel(get(), get()) }
     viewModel { RegisterCustomerViewModel(get()) }
-    viewModel { SaleViewModel(get(), get()) }
+    viewModel { SaleViewModel(get()) }
     viewModel { OrderCartViewModel(get(), get()) }
     viewModel { ProductsViewModel(get()) }
 

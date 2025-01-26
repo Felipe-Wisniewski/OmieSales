@@ -11,4 +11,5 @@ interface ProductLocalDataSource {
     suspend fun updateOrderItem(oldItem: OrderItem, newItem: OrderItem)
     suspend fun loadOrder(): Flow<List<OrderItem>>
     suspend fun deleteOrderItem(orderItem: OrderItem)
+    suspend fun deleteOrderItems()
 }
