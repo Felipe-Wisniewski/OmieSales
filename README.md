@@ -20,3 +20,6 @@ Aplicativo Android de vendas desenvolvido em Kotlin.
 - Criar testes instrumentados.
 - Extrair textos hardcoded para string.xml
 - Agrupar produtos por categoria
+
+## Preview
+<img src="https://github.com/Felipe-Wisniewski/OmieSales/blob/feature-images/media/omiesales.gif" width="300"/>
