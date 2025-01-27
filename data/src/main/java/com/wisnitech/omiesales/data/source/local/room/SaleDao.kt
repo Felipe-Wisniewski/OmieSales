@@ -49,7 +49,7 @@ internal interface SaleDao {
     fun deleteSale(saleId: Long)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun saveProductOnSale(saleProduct: SaleProduct): Long
+    fun saveProductsOnSale(saleProducts:List<SaleProduct>)
 
     @Transaction
     @Query(

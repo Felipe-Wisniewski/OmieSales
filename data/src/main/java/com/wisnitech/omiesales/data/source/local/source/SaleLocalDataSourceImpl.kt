@@ -10,8 +10,8 @@ internal class SaleLocalDataSourceImpl(private val dao: SaleDao) : SaleLocalData
 
     override suspend fun deleteSale(saleId: Long) = dao.deleteSale(saleId)
 
-    override suspend fun saveProductOnSale(saleProduct: SaleProduct) =
-        dao.saveProductOnSale(saleProduct)
+    override suspend fun saveProductsOnSale(saleProducts: List<SaleProduct>) =
+        dao.saveProductsOnSale(saleProducts)
 
     override suspend fun loadSumOfSales() = dao.loadSumOfSales()
 

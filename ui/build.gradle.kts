@@ -54,11 +54,18 @@ dependencies {
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.androidx.recycler.view)
     implementation(libs.databind.compiler)
-
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines)
     api(libs.navigation.fragment)
     api(libs.navigation.ui)
 
+
     testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.androidx.arch.core.test)
+    testImplementation(libs.mockk)
+    testImplementation(kotlin("test"))
     androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.arch.core.test)
     androidTestImplementation(libs.androidx.espresso.core)
 }

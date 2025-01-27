@@ -9,7 +9,6 @@ import com.wisnitech.omiesales.data.repository.ProductRepository
 import com.wisnitech.omiesales.data.repository.SaleRepository
 import com.wisnitech.omiesales.ui.utils.Status
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -43,12 +42,10 @@ class HomeViewModel(
             saleRepository.getSales()
         }
 
-        delay(1000)
-
-        result.forEach { total += it.saleValue }
-
         _sales.value = result
         _saleCount.value = result.size
+
+        result.forEach { total += it.saleValue }
         _salesValue.value = total
 
         _status.value = Status.SUCCESS

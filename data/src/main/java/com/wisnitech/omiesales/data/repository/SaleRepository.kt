@@ -8,7 +8,7 @@ import com.wisnitech.omiesales.data.model.SumSales
 interface SaleRepository {
     suspend fun addSale(sale: Sale): Long?
     suspend fun removeSale(saleId: Long)
-    suspend fun addProductOnSale(saleProduct: SaleProduct): Long
+    suspend fun addProductsOnSale(saleProducts:List<SaleProduct>)
     suspend fun getSales(): List<SumSales>
     suspend fun getProductListBySaleId(saleId: Long): List<SaleProductClient>
 }

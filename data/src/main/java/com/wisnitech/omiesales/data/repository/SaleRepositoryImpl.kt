@@ -15,8 +15,8 @@ class SaleRepositoryImpl(
 
     override suspend fun removeSale(saleId: Long) = saleLocal.deleteSale(saleId)
 
-    override suspend fun addProductOnSale(saleProduct: SaleProduct) =
-        saleLocal.saveProductOnSale(saleProduct)
+    override suspend fun addProductsOnSale(saleProducts: List<SaleProduct>) =
+        saleLocal.saveProductsOnSale(saleProducts)
 
     override suspend fun getSales(): List<SumSales> {
         return saleLocal.loadSumOfSales()

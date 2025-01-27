@@ -121,6 +121,12 @@ class OrderCartFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        viewModel.updateCart()
+    }
+
     companion object {
         private const val CUSTOMER_ID = "customer_id"
 

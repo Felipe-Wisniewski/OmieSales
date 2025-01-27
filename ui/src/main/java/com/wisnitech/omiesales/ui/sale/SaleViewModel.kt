@@ -27,21 +27,19 @@ class SaleViewModel(
     }
 
     private fun getTotalItemsAndValue() = viewModelScope.launch {
-        val order = withContext(Dispatchers.IO) {
-            productRepository.getOrder()
-        }
+        withContext(Dispatchers.IO) {
+            productRepository.getOrder().collect { items ->
+                var totalItems = 0
+                var totalValue = 0.0
 
-        order.collect { items ->
-            var totalItems = 0
-            var totalValue = 0.0
+                items.forEach {
+                    totalItems += it.quantity
+                    totalValue += it.total
+                }
 
-            items.forEach {
-                totalItems += it.quantity
-                totalValue += it.total
+                _orderTotalItems.postValue("Items: $totalItems")
+                _orderTotalValue.postValue(totalValue)
             }
-
-            _orderTotalItems.postValue("Items: $totalItems")
-            _orderTotalValue.postValue(totalValue)
         }
     }
 
@@ -50,6 +48,6 @@ class SaleViewModel(
     }
 
     fun removeAllItemsFromCart() = viewModelScope.launch {
-            withContext(Dispatchers.IO) { productRepository.removeOrderItems() }
+        withContext(Dispatchers.IO) { productRepository.removeOrderItems() }
     }
 }

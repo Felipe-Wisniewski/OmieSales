@@ -25,26 +25,20 @@ class OrderCartViewModel(
     private var _customerId: Long = 0
 
     private val _orderItems = MutableLiveData<List<OrderItem>>()
-    val orderItems: LiveData<List<OrderItem>> get() = _orderItems
+    val orderItems: LiveData<List<OrderItem>> = _orderItems
 
     private val _orderPlaced = MutableLiveData<Event<Unit>>()
-    val orderPlaced: LiveData<Event<Unit>> get() = _orderPlaced
-
-    init {
-        updateCart()
-    }
+    val orderPlaced: LiveData<Event<Unit>> = _orderPlaced
 
     fun setCustomerId(customerId: Long) {
         _customerId = customerId
     }
 
-    private fun updateCart() = viewModelScope.launch {
-        val order = withContext(Dispatchers.IO) {
-            productRepository.getOrder()
-        }
-
-        order.collect { items ->
-            _orderItems.value = items
+    fun updateCart() = viewModelScope.launch {
+        withContext(Dispatchers.IO) {
+            productRepository.getOrder().collect { items ->
+                _orderItems.postValue(items)
+            }
         }
     }
 
@@ -92,16 +86,21 @@ class OrderCartViewModel(
     private fun placeOrder(saleId: Long?) = viewModelScope.launch {
         if (saleId != null) {
             val order = orderItems.value
+            val saleProducts = mutableListOf<SaleProduct>()
 
             order?.forEach { item ->
-                val sale = SaleProduct(saleId, item.productId, item.quantity)
-                withContext(Dispatchers.IO) {
-                    saleRepository.addProductOnSale(sale)
-                }
-            }.apply {
-                removeAllItemsFromCart()
-                _orderPlaced.value = Event(Unit)
+                val saleProduct = SaleProduct(saleId, item.productId, item.quantity)
+                saleProducts.add(saleProduct)
             }
+
+            val result = async(Dispatchers.IO) {
+                saleRepository.addProductsOnSale(saleProducts)
+            }
+
+            result.await()
+
+            removeAllItemsFromCart()
+            _orderPlaced.value = Event(Unit)
         }
     }
 
