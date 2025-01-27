@@ -47,6 +47,11 @@ dependencies {
     api(libs.koin)
 
     testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.androidx.arch.core.test)
+    testImplementation(libs.mockk)
+    testImplementation(kotlin("test"))
     androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.arch.core.test)
     androidTestImplementation(libs.androidx.espresso.core)
 }

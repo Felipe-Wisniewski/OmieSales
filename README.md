@@ -11,7 +11,7 @@ Aplicativo Android de vendas desenvolvido em Kotlin.
 - [Coroutines](https://developer.android.com/kotlin/coroutines) | [LiveData](https://developer.android.com/topic/libraries/architecture/livedata) | [Flow](https://developer.android.com/kotlin/flow): Tarefas assincronas.
 - [Koin](https://github.com/InsertKoinIO/koin) : Injeção de dependências.
 - [Materia Desing](https://m3.material.io/components) : Componentes de UI.
-- [MockK](https://mockk.io/) : Criar mocks (dubles) para realização de testes.
+- [MockK](https://mockk.io/) | [Mockito](https://site.mockito.org/): Criar mocks (dubles) para realização de testes.
 
 ## Arquitetura
 - O App esta modularizado separando a camada DATA e UI.<br>
