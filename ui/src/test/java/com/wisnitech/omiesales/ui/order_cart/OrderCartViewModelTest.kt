@@ -44,6 +44,11 @@ class OrderCartViewModelTest {
         viewModel = OrderCartViewModel(productRepository, saleRepository)
     }
 
+    @After
+    fun tearDown() {
+        Dispatchers.resetMain()
+    }
+
     @Test
     fun `setCustomerId should update customerId`() {
         val customerId = 1234L
@@ -138,8 +143,5 @@ class OrderCartViewModelTest {
         verify { observer.onChanged(any()) }
     }
 
-    @After
-    fun tearDown() {
-        Dispatchers.resetMain()
-    }
+
 }

@@ -74,6 +74,12 @@ class SaleFragment : Fragment() {
             .show()
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        viewModel.getTotalItemsAndValue()
+    }
+
     private fun setViewPager() {
         viewPager = binding.viewPagerSale.apply {
             adapter = SalePagerAdapter(this@SaleFragment)
