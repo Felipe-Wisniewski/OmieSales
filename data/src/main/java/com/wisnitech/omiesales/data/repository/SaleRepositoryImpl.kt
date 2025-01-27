@@ -4,11 +4,9 @@ import com.wisnitech.omiesales.data.model.Sale
 import com.wisnitech.omiesales.data.model.SaleProduct
 import com.wisnitech.omiesales.data.model.SumSales
 import com.wisnitech.omiesales.data.source.local.source.SaleLocalDataSource
-import com.wisnitech.omiesales.data.source.remote.source.SaleRemoteDataSource
 
 class SaleRepositoryImpl(
-    private val saleLocal: SaleLocalDataSource,
-    private val saleRemote: SaleRemoteDataSource
+    private val saleLocal: SaleLocalDataSource
 ) : SaleRepository {
 
     override suspend fun addSale(sale: Sale) = saleLocal.saveSale(sale)

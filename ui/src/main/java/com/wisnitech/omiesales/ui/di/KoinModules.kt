@@ -16,7 +16,6 @@ import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
 val uiModules = module {
-
     viewModel { HomeViewModel(get(), get()) }
     viewModel { RegisterCustomerViewModel(get()) }
     viewModel { SaleDetailsViewModel(get()) }
@@ -24,8 +23,7 @@ val uiModules = module {
     viewModel { OrderCartViewModel(get(), get()) }
     viewModel { ProductsViewModel(get()) }
 
-    factory<SaleRepository> { SaleRepositoryImpl(get(), get()) }
-    factory<CustomerRepository> { CustomerRepositoryImpl(get(), get()) }
+    factory<SaleRepository> { SaleRepositoryImpl(get()) }
+    factory<CustomerRepository> { CustomerRepositoryImpl(get()) }
     factory<ProductRepository> { ProductRepositoryImpl(get(), get()) }
-
 }
