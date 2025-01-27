@@ -3,9 +3,9 @@
 Aplicativo Android de vendas desenvolvido em Kotlin.
 
 ## Requisitos:
-- O aplicativo deve permitir que o usuário registre um pedido com vários itens, incluindo a descrição de cada item, a quantidade, o valor unitário e o valor total de cada item.
-- O aplicativo deve calcular o valor total do pedido somando o valor total de cada item.
-- O aplicativo deve permitir que o usuário visualize todos os pedidos registrados, incluindo a descrição dos itens do pedido, a quantidade, o valor unitário e o valor total de cada item, bem como o valor total do pedido.
+- O aplicativo permite que o usuário registre um pedido com vários itens, incluindo a descrição de cada item, a quantidade, o valor unitário e o valor total de cada item.
+- O aplicativo calcula o valor total do pedido somando o valor total de cada item.
+- O aplicativo permite que o usuário visualize todos os pedidos registrados, incluindo a descrição dos itens do pedido, a quantidade, o valor unitário e o valor total de cada item, bem como o valor total do pedido.
 
 ## Biblíotecas utilizadas:
 
@@ -20,6 +20,13 @@ Aplicativo Android de vendas desenvolvido em Kotlin.
 - Criar testes instrumentados.
 - Extrair textos hardcoded para string.xml
 - Agrupar produtos por categoria
+
+## Base de dados
+- Foi utilizado um banco local em SQLite que faz toda a persistência dos dados do aplicativo, existe uma chamada mockada que simula o retorno de uma API remota que carrega todos os produtos para base local.
+- Diagrama do banco:
+
+<img src="https://github.com/Felipe-Wisniewski/OmieSales/blob/feature-images/media/db-diagram.png" width="300"/>
+
 
 ## Preview
 <img src="https://github.com/Felipe-Wisniewski/OmieSales/blob/feature-images/media/omiesales.gif" width="300"/>
