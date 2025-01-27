@@ -10,7 +10,7 @@ Aplicativo Android de vendas desenvolvido em Kotlin.
 - [Room](https://developer.android.com/jetpack/androidx/releases/room) : Persistência de dados no SQLite.
 - [Coroutines](https://developer.android.com/kotlin/coroutines) | [LiveData](https://developer.android.com/topic/libraries/architecture/livedata) | [Flow](https://developer.android.com/kotlin/flow): Tarefas assíncronas.
 - [Koin](https://github.com/InsertKoinIO/koin) : Injeção de dependências.
-- [Materia Desing](https://m3.material.io/components) : Componentes de UI.
+- [Material Design 3](https://m3.material.io/components) : Componentes de UI.
 - [MockK](https://mockk.io/) | [Mockito](https://site.mockito.org/): Criar mocks (dubles) para realização de testes.
 
 ## Arquitetura
