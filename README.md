@@ -25,7 +25,7 @@ Aplicativo Android de vendas desenvolvido em Kotlin.
 - Foi utilizado um banco local em SQLite que faz toda a persistência dos dados do aplicativo, existe uma chamada mockada que simula o retorno de uma API remota que carrega todos os produtos para base local.
 - Diagrama do banco:
 
-<img src="https://github.com/Felipe-Wisniewski/OmieSales/blob/feature-images/media/db-diagram.png" width="300"/>
+<img src="https://github.com/Felipe-Wisniewski/OmieSales/blob/feature-images/media/db-diagram.png" width="800"/>
 
 
 ## Preview
