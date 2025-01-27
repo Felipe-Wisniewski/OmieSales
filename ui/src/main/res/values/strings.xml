@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="register_customer.invalid_phone">Invalid phone</string>
+
+    <string name="item_order_currency_value">R$ %1$s</string>
+</resources>

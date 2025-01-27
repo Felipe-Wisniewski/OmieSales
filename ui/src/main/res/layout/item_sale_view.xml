@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="sumSale"
+            type="com.wisnitech.omiesales.data.model.SumSales" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container_item_sale_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:paddingHorizontal="16dp"
+        android:paddingTop="12dp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/item_sale_customer_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:text="@{sumSale.customerName}"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/item_sale_number"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Felipe Wisniewski" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/item_sale_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textSize="11sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/item_sale_divider"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/item_sale_customer_name"
+            app:set_formatted_date="@{sumSale.saleDate}"
+            tools:text="24/01/2025 - 11:45:11" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/item_sale_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:set_currency_value="@{sumSale.saleValue}"
+            tools:text="R$ 5,00" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/item_sale_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textSize="11sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/item_sale_value"
+            app:set_item_sale_number="@{sumSale.saleId}"
+            tools:text="N° 1" />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/item_sale_divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/item_sale_date" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

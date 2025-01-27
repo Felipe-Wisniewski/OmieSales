@@ -21,3 +21,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "OmieSales"
 include(":app")
+include(":ui")
+include(":data")
