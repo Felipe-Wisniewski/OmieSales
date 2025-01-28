@@ -24,9 +24,6 @@ class ProductRepositoryImpl(
 
     override suspend fun addOrderItem(orderItem: OrderItem) = productLocal.saveOrderItem(orderItem)
 
-    override suspend fun updateOrderItem(oldItem: OrderItem, newItem: OrderItem) =
-        productLocal.updateOrderItem(oldItem, newItem)
-
     override fun getOrder(): Flow<List<OrderItem>> = productLocal.loadOrder()
 
     override suspend fun removeOrderItem(orderItem: OrderItem) =
