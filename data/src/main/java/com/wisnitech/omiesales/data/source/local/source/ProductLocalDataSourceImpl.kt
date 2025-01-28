@@ -13,12 +13,7 @@ internal class ProductLocalDataSourceImpl(private val dao: SaleDao) : ProductLoc
 
     override suspend fun saveOrderItem(orderItem: OrderItem) = dao.saveOrderItem(orderItem)
 
-    override suspend fun updateOrderItem(oldItem: OrderItem, newItem: OrderItem) {
-        dao.deleteOrderItem(oldItem)
-        dao.saveOrderItem(newItem)
-    }
-
-    override suspend fun loadOrder(): Flow<List<OrderItem>> = dao.loadOrder()
+    override fun loadOrder(): Flow<List<OrderItem>> = dao.loadOrder()
 
     override suspend fun deleteOrderItem(orderItem: OrderItem) = dao.deleteOrderItem(orderItem)
 

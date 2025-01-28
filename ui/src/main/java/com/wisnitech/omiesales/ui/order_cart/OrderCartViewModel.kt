@@ -35,17 +35,14 @@ class OrderCartViewModel(
     }
 
     fun updateCart() = viewModelScope.launch {
-        withContext(Dispatchers.IO) {
-            productRepository.getOrder().collect { items ->
-                _orderItems.postValue(items)
-            }
+        productRepository.getOrder().collect { items ->
+            _orderItems.postValue(items)
         }
     }
 
     fun updateOrderItem(orderItem: OrderItem, quantity: Int) = viewModelScope.launch {
         when {
             quantity == 0 -> removeItem(orderItem)
-
             quantity != orderItem.quantity -> updateItem(orderItem, quantity)
         }
     }
@@ -58,15 +55,12 @@ class OrderCartViewModel(
 
     private fun updateItem(orderItem: OrderItem, quantity: Int) = viewModelScope.launch {
         withContext(Dispatchers.IO) {
-            val newItem = OrderItem(
-                productId = orderItem.productId,
-                productName = orderItem.productName,
-                productPrice = orderItem.productPrice,
-                productPriceUnit = orderItem.productPriceUnit,
+            val newItem = orderItem.copy(
                 quantity = quantity,
                 total = totalValueOfProducts(orderItem.productPrice, quantity)
             )
-            productRepository.updateOrderItem(orderItem, newItem)
+
+            productRepository.addOrderItem(newItem)
         }
     }
 
@@ -76,29 +70,27 @@ class OrderCartViewModel(
             saleDate = Calendar.getInstance().getCurrentDate()
         )
 
-        val saleId = async(Dispatchers.IO) {
+        val saleId = withContext(Dispatchers.IO) {
             saleRepository.addSale(sale)
         }
 
-        placeOrder(saleId.await())
+        saleId?.let { placeOrder(it) }
     }
 
-    private fun placeOrder(saleId: Long?) = viewModelScope.launch {
-        if (saleId != null) {
-            val order = orderItems.value
-            val saleProducts = mutableListOf<SaleProduct>()
+    private fun placeOrder(saleId: Long) = viewModelScope.launch {
+        val order = orderItems.value
+        val saleProducts = mutableListOf<SaleProduct>()
 
-            order?.forEach { item ->
-                val saleProduct = SaleProduct(saleId, item.productId, item.quantity)
-                saleProducts.add(saleProduct)
-            }
+        order?.forEach { item ->
+            val saleProduct = SaleProduct(saleId, item.productId, item.quantity)
+            saleProducts.add(saleProduct)
+        }
 
-            val result = async(Dispatchers.IO) {
-                saleRepository.addProductsOnSale(saleProducts)
-            }
+        val result = withContext(Dispatchers.IO) {
+            saleRepository.addProductsOnSale(saleProducts)
+        }
 
-            result.await()
-
+        if (result == Unit) {
             removeAllItemsFromCart()
             _orderPlaced.value = Event(Unit)
         }

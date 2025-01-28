@@ -79,15 +79,14 @@ class OrderCartViewModelTest {
     fun `updateOrderItem should call updateItem if quantity changes`() = runTest {
         val orderItem = OrderItem(1L, 1L, "Feijão", 10.0, "Un", 1, 10.0)
 
-        coEvery { productRepository.updateOrderItem(any(), any()) } just Runs
+        coEvery { productRepository.addOrderItem(any()) } just Runs
 
         viewModel.updateOrderItem(orderItem, 5)
 
         advanceUntilIdle()
 
         coVerify {
-            productRepository.updateOrderItem(
-                orderItem,
+            productRepository.addOrderItem(
                 withArg {
                     assertEquals(5, it.quantity)
                     assertEquals(50.0, it.total)
@@ -142,6 +141,4 @@ class OrderCartViewModelTest {
 
         verify { observer.onChanged(any()) }
     }
-
-
 }

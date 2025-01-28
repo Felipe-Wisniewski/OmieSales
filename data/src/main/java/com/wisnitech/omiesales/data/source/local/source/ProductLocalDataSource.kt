@@ -8,8 +8,7 @@ interface ProductLocalDataSource {
     suspend fun saveAllProducts(products: List<Product>)
     suspend fun loadProducts(): List<Product>
     suspend fun saveOrderItem(orderItem: OrderItem)
-    suspend fun updateOrderItem(oldItem: OrderItem, newItem: OrderItem)
-    suspend fun loadOrder(): Flow<List<OrderItem>>
+    fun loadOrder(): Flow<List<OrderItem>>
     suspend fun deleteOrderItem(orderItem: OrderItem)
     suspend fun deleteOrderItems()
 }
