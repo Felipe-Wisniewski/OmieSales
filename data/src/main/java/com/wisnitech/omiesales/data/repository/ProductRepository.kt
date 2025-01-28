@@ -9,7 +9,7 @@ interface ProductRepository {
     suspend fun getProducts(): List<Product>
     suspend fun addOrderItem(orderItem: OrderItem)
     suspend fun updateOrderItem(oldItem: OrderItem, newItem: OrderItem)
-    suspend fun getOrder(): Flow<List<OrderItem>>
+    fun getOrder(): Flow<List<OrderItem>>
     suspend fun removeOrderItem(orderItem: OrderItem)
     suspend fun removeOrderItems()
 }

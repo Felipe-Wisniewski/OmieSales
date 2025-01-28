@@ -35,10 +35,8 @@ class OrderCartViewModel(
     }
 
     fun updateCart() = viewModelScope.launch {
-        withContext(Dispatchers.IO) {
-            productRepository.getOrder().collect { items ->
-                _orderItems.postValue(items)
-            }
+        productRepository.getOrder().collect { items ->
+            _orderItems.postValue(items)
         }
     }
 

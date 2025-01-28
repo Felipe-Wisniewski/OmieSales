@@ -32,8 +32,8 @@ class SaleViewModel(
                 totalValue += it.total
             }
 
-            _orderTotalItems.postValue("Items: $totalItems")
-            _orderTotalValue.postValue(totalValue)
+            _orderTotalItems.value = "Items: $totalItems"
+            _orderTotalValue.value = totalValue
         }
     }
 
