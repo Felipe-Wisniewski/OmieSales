@@ -19,8 +19,8 @@ class ProductsViewModel(
     private val _status = MutableLiveData<Status>()
     val status: LiveData<Status> get() = _status
 
-    private val _products = MutableLiveData<List<Product>>()
-    val products: LiveData<List<Product>> get() = _products
+    private val _products = MutableLiveData<List<Product?>>()
+    val products: LiveData<List<Product?>> get() = _products
 
     fun getAllProducts() = viewModelScope.launch {
         _status.value = Status.LOADING
@@ -31,6 +31,10 @@ class ProductsViewModel(
 
         if (result.isNotEmpty()) {
             _products.value = result
+                .sortedBy { it.category }
+                .groupBy { it.category }
+                .flatMap { (_, prod) -> listOf(null) + prod }
+
             _status.value = Status.SUCCESS
         }
     }
