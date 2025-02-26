@@ -7,8 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.widget.doAfterTextChanged
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.textfield.TextInputEditText
 import com.wisnitech.omiesales.data.model.OrderItem
 import com.wisnitech.omiesales.ui.R
 import com.wisnitech.omiesales.ui.databinding.FragmentOrderCartBinding
@@ -57,7 +59,7 @@ class OrderCartFragment : Fragment() {
 
     private fun initListeners() {
         binding.fabConfirmOrder.setOnClickListener {
-            setConfirmDialog()
+            setAddDiscountDialog()
         }
     }
 
@@ -118,6 +120,27 @@ class OrderCartFragment : Fragment() {
         dialog.findViewById<Button>(R.id.btn_add_item)?.setOnClickListener {
             quantity++
             textView?.text = "$quantity"
+        }
+    }
+
+    private fun setAddDiscountDialog() {
+        var discount = 0.0
+        val dialog = MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Add discount ?")
+            .setView(R.layout.item_input_discount)
+            .setNegativeButton("Cancel") { dialog, _ ->
+                setConfirmDialog()
+                dialog.dismiss()
+            }
+            .setPositiveButton("Ok") { dialog, _ ->
+                viewModel.setDiscount(discount)
+                dialog.dismiss()
+            }
+            .show()
+
+        dialog.findViewById<TextInputEditText>(R.id.input_discount)?.doAfterTextChanged {
+            val disc = it.toString()
+            discount = disc.toDouble()
         }
     }
 

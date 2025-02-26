@@ -1,5 +1,6 @@
 package com.wisnitech.omiesales.ui.order_cart
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,7 +13,6 @@ import com.wisnitech.omiesales.data.repository.SaleRepository
 import com.wisnitech.omiesales.ui.utils.Event
 import com.wisnitech.omiesales.ui.utils.getCurrentDate
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.Calendar
@@ -23,6 +23,8 @@ class OrderCartViewModel(
 ) : ViewModel() {
 
     private var _customerId: Long = 0
+
+    private var total : Double = 0.0
 
     private val _orderItems = MutableLiveData<List<OrderItem>>()
     val orderItems: LiveData<List<OrderItem>> = _orderItems
@@ -36,6 +38,11 @@ class OrderCartViewModel(
 
     fun updateCart() = viewModelScope.launch {
         productRepository.getOrder().collect { items ->
+            total = 0.0
+            items.forEach {
+                total += it.total
+            }
+
             _orderItems.postValue(items)
         }
     }
@@ -95,6 +102,30 @@ class OrderCartViewModel(
             _orderPlaced.value = Event(Unit)
         }
     }
+
+    fun setDiscount(discount:Double) {
+        Log.d("FLMWG","total:$total")
+        Log.d("FLMWG","disc:$discount")
+
+        val discountPercent = (100 * discount) / total
+//        val sub = total * discountPercent
+//        total = (total - sub)
+
+        val orders = orderItems.value
+
+        Log.d("FLMWG","discPerc:$discountPercent")
+
+        orders?.forEach {
+            val sub = it.productPrice * (discountPercent / 100)
+            val newPrice = (it.productPrice - sub)
+            Log.d("FLMWG","newPrice:$newPrice")
+            val order = it.copy(
+                productPrice = newPrice
+            )
+            updateItem(order, order.quantity)
+        }
+    }
+
 
     private fun removeAllItemsFromCart() = viewModelScope.launch {
         withContext(Dispatchers.IO) { productRepository.removeOrderItems() }

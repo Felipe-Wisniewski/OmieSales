@@ -26,3 +26,13 @@ fun String.getFormattedDate(): String {
         this
     }
 }
+
+fun String.getDdMmYyyy(): String {
+    return try {
+        val oldDate = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale("pt", "BR")).parse(this)
+        SimpleDateFormat("dd/MM/yyyy", Locale("pt", "BR")).format(oldDate ?: "")
+    } catch (e: Exception) {
+        e.printStackTrace()
+        this
+    }
+}

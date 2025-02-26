@@ -16,7 +16,7 @@ class ProductsAdapter(
     override fun getItemViewType(position: Int): Int {
         return if (getItem(position) == null) VIEW_TYPE_HEADER else VIEW_TYPE_ITEM
     }
-    
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         return when (viewType) {
@@ -49,7 +49,7 @@ class ProductsAdapter(
 
     }
 
-    inner class HeaderViewHolder(
+    class HeaderViewHolder(
         private val binding: ItemProductHeaderViewBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
